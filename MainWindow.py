@@ -1,10 +1,9 @@
 # Form implementation generated from reading ui file 'C:\Users\School Account\Projects\Wordle\wordle.ui'
-# Encapsulates a main window
 
 from PyQt5 import QtCore, QtGui, QtWidgets
 from CharBox import CharBox
 
-
+# Encapsulates the UI of a window
 class UiMainWindow(object):
     def setup_ui(self, main_window):
         main_window.setObjectName("main_window")
@@ -44,7 +43,7 @@ class UiMainWindow(object):
         self.char_box_f4: CharBox = CharBox(self.central_widget, QtCore.QRect(190, 250, 50, 50), "char_box_f4")
         self.char_box_f5: CharBox = CharBox(self.central_widget, QtCore.QRect(250, 250, 50, 50), "char_box_f5")
         self.enter_button = QtWidgets.QPushButton(self.central_widget)
-        self.enter_button.setGeometry(QtCore.QRect(10, 370, 280, 50))
+        self.enter_button.setGeometry(QtCore.QRect(10, 370, 290, 50))
         self.enter_button.setObjectName("enter_button")
         main_window.setCentralWidget(self.central_widget)
         self.menu_bar = QtWidgets.QMenuBar(main_window)
@@ -121,6 +120,7 @@ class UiMainWindow(object):
         self.actionHow_To_Play_2.setText(_translate("main_window", "How To Play"))
 
 
+# Encapsulates a main window
 class MainWindow(QtWidgets.QMainWindow, UiMainWindow):
     def __init__(self, *args, **kwargs):
         super(MainWindow, self).__init__(*args, **kwargs)
