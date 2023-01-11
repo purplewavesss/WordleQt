@@ -7,7 +7,7 @@ class CharBox(QtWidgets.QLabel):
         self.setParent(parent)
         self.setGeometry(geometry)
         self.setObjectName(obj_name)
-        self.__text: str = ""
+        self.__text: str = " "
         self.change_text(self.__text)
         font = QtGui.QFont()
         try:
