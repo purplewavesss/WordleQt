@@ -1,7 +1,7 @@
-import Word
+from MainWindow import MainWindow
 
 
-# Encapuslates the game functions
+# Encapsulates the game functions
 class Game:
-    def __init__(self, _words_tuple: tuple[Word, Word, Word, Word, Word, Word]):
-        self.words_tuple: tuple[Word, Word, Word, Word, Word, Word] = _words_tuple
+    def __init__(self, _window: MainWindow):
+        self.window = _window
