@@ -1,10 +1,10 @@
 # Form implementation generated from reading ui file 'C:\Users\School Account\Projects\Wordle\wordle.ui'
-# Encapsulates a main window
 
 from PyQt5 import QtCore, QtGui, QtWidgets
 from CharBox import CharBox
 
 
+# Encapsulates the UI of a window
 class UiMainWindow(object):
     def setup_ui(self, main_window):
         main_window.setObjectName("main_window")
@@ -38,13 +38,13 @@ class UiMainWindow(object):
         self.char_box_e3: CharBox = CharBox(self.central_widget, QtCore.QRect(130, 250, 50, 50), "char_box_e3")
         self.char_box_e4: CharBox = CharBox(self.central_widget, QtCore.QRect(190, 250, 50, 50), "char_box_e4")
         self.char_box_e5: CharBox = CharBox(self.central_widget, QtCore.QRect(250, 250, 50, 50), "char_box_e5")
-        self.char_box_f1: CharBox = CharBox(self.central_widget, QtCore.QRect(10, 250, 50, 50), "char_box_f1")
-        self.char_box_f2: CharBox = CharBox(self.central_widget, QtCore.QRect(70, 250, 50, 50), "char_box_f2")
-        self.char_box_f3: CharBox = CharBox(self.central_widget, QtCore.QRect(130, 250, 50, 50), "char_box_f3")
-        self.char_box_f4: CharBox = CharBox(self.central_widget, QtCore.QRect(190, 250, 50, 50), "char_box_f4")
-        self.char_box_f5: CharBox = CharBox(self.central_widget, QtCore.QRect(250, 250, 50, 50), "char_box_f5")
+        self.char_box_f1: CharBox = CharBox(self.central_widget, QtCore.QRect(10, 310, 50, 50), "char_box_f1")
+        self.char_box_f2: CharBox = CharBox(self.central_widget, QtCore.QRect(70, 310, 50, 50), "char_box_f2")
+        self.char_box_f3: CharBox = CharBox(self.central_widget, QtCore.QRect(130, 310, 50, 50), "char_box_f3")
+        self.char_box_f4: CharBox = CharBox(self.central_widget, QtCore.QRect(190, 310, 50, 50), "char_box_f4")
+        self.char_box_f5: CharBox = CharBox(self.central_widget, QtCore.QRect(250, 310, 50, 50), "char_box_f5")
         self.enter_button = QtWidgets.QPushButton(self.central_widget)
-        self.enter_button.setGeometry(QtCore.QRect(10, 370, 280, 50))
+        self.enter_button.setGeometry(QtCore.QRect(10, 370, 290, 50))
         self.enter_button.setObjectName("enter_button")
         main_window.setCentralWidget(self.central_widget)
         self.menu_bar = QtWidgets.QMenuBar(main_window)
@@ -78,10 +78,8 @@ class UiMainWindow(object):
         self.daily_game_action.setObjectName("daily_game_action")
         self.practice_game_action = QtWidgets.QAction(main_window)
         self.practice_game_action.setObjectName("practice_game_action")
-        self.actionHow_To_Play = QtWidgets.QAction(main_window)
-        self.actionHow_To_Play.setObjectName("actionHow_To_Play")
-        self.actionHow_To_Play_2 = QtWidgets.QAction(main_window)
-        self.actionHow_To_Play_2.setObjectName("actionHow_To_Play_2")
+        self.credits_action = QtWidgets.QAction(main_window)
+        self.credits_action.setObjectName("credits_action")
         self.file_menu.addAction(self.exit_action)
         self.new_game_menu.addAction(self.daily_game_action)
         self.new_game_menu.addAction(self.practice_game_action)
@@ -90,8 +88,7 @@ class UiMainWindow(object):
         self.game_menu.addAction(self.check_stats_action)
         self.settings_menu.addAction(self.add_words_action)
         self.settings_menu.addAction(self.mode_action)
-        self.about_menu.addAction(self.actionHow_To_Play)
-        self.about_menu.addAction(self.actionHow_To_Play_2)
+        self.about_menu.addAction(self.credits_action)
         self.menu_bar.addAction(self.file_menu.menuAction())
         self.menu_bar.addAction(self.game_menu.menuAction())
         self.menu_bar.addAction(self.settings_menu.menuAction())
@@ -117,10 +114,10 @@ class UiMainWindow(object):
         self.check_stats_action.setText(_translate("main_window", "Check Stats"))
         self.daily_game_action.setText(_translate("main_window", "Daily"))
         self.practice_game_action.setText(_translate("main_window", "Practice"))
-        self.actionHow_To_Play.setText(_translate("main_window", "Credits"))
-        self.actionHow_To_Play_2.setText(_translate("main_window", "How To Play"))
+        self.credits_action.setText(_translate("main_window", "Credits"))
 
 
+# Encapsulates a main window
 class MainWindow(QtWidgets.QMainWindow, UiMainWindow):
     def __init__(self, *args, **kwargs):
         super(MainWindow, self).__init__(*args, **kwargs)
