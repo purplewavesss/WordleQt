@@ -1,10 +1,10 @@
 # Creates triggers for menu items
 import sys
 from PyQt5 import QtWidgets
-from MainWindow import MainWindow
+from GameWindow import GameWindow
 
 
-def implement_triggers(window: MainWindow):
+def implement_triggers(window: GameWindow):
     window.exit_action.triggered.connect(exit_action_triggers)
     window.credits_action.triggered.connect(credit_action_triggers)
     window.daily_game_action.triggered.connect(not_implemented)

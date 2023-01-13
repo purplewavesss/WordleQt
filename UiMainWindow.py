@@ -1,8 +1,7 @@
 # Form implementation generated from reading ui file 'C:\Users\School Account\Projects\Wordle\wordle.ui'
 
-from PyQt5 import QtCore, QtGui, QtWidgets
+from PyQt5 import QtCore, QtWidgets
 from CharBox import CharBox
-from Player import Player
 from Row import Row
 
 
@@ -133,79 +132,3 @@ class UiMainWindow(object):
         self.daily_game_action.setText(_translate("main_window", "Daily"))
         self.practice_game_action.setText(_translate("main_window", "Practice"))
         self.credits_action.setText(_translate("main_window", "Credits"))
-
-
-# Encapsulates a main window
-class MainWindow(QtWidgets.QMainWindow, UiMainWindow):
-    def __init__(self, _player: Player, *args, **kwargs):
-        super(MainWindow, self).__init__(*args, **kwargs)
-        self.player: Player = _player
-        self.setup_ui(self)
-
-    def keyPressEvent(self, a0: QtGui.QKeyEvent) -> None:
-        self.key_parse(a0)
-
-    def key_parse(self, keyboard: QtGui.QKeyEvent):
-        match keyboard.key():
-            case QtCore.Qt.Key_A:
-                self.current_row.add_char("A")
-            case QtCore.Qt.Key_B:
-                self.current_row.add_char("B")
-            case QtCore.Qt.Key_C:
-                self.current_row.add_char("C")
-            case QtCore.Qt.Key_D:
-                self.current_row.add_char("D")
-            case QtCore.Qt.Key_E:
-                self.current_row.add_char("E")
-            case QtCore.Qt.Key_F:
-                self.current_row.add_char("F")
-            case QtCore.Qt.Key_G:
-                self.current_row.add_char("G")
-            case QtCore.Qt.Key_H:
-                self.current_row.add_char("H")
-            case QtCore.Qt.Key_I:
-                self.current_row.add_char("I")
-            case QtCore.Qt.Key_J:
-                self.current_row.add_char("J")
-            case QtCore.Qt.Key_K:
-                self.current_row.add_char("K")
-            case QtCore.Qt.Key_L:
-                self.current_row.add_char("L")
-            case QtCore.Qt.Key_M:
-                self.current_row.add_char("M")
-            case QtCore.Qt.Key_N:
-                self.current_row.add_char("N")
-            case QtCore.Qt.Key_O:
-                self.current_row.add_char("O")
-            case QtCore.Qt.Key_P:
-                self.current_row.add_char("P")
-            case QtCore.Qt.Key_Q:
-                self.current_row.add_char("Q")
-            case QtCore.Qt.Key_R:
-                self.current_row.add_char("R")
-            case QtCore.Qt.Key_S:
-                self.current_row.add_char("S")
-            case QtCore.Qt.Key_T:
-                self.current_row.add_char("T")
-            case QtCore.Qt.Key_U:
-                self.current_row.add_char("U")
-            case QtCore.Qt.Key_V:
-                self.current_row.add_char("V")
-            case QtCore.Qt.Key_W:
-                self.current_row.add_char("W")
-            case QtCore.Qt.Key_X:
-                self.current_row.add_char("X")
-            case QtCore.Qt.Key_Y:
-                self.current_row.add_char("Y")
-            case QtCore.Qt.Key_Z:
-                self.current_row.add_char("Z")
-            case QtCore.Qt.Key_Backspace:
-                self.current_row.remove_char()
-            case QtCore.Qt.Key_Return:
-                if len(self.current_row.get_word()) == 5:
-                    if self.row_indice < 5:
-                        self.row_indice += 1
-                    self.player.add_answer(self.current_row.get_word())
-                    self.current_row = self.rows[self.row_indice]
-
-        self.current_row.update_char_boxes()

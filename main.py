@@ -1,8 +1,7 @@
 import sys
 from PyQt5 import QtWidgets
 from Player import Player
-from Game import Game
-from MainWindow import MainWindow
+from GameWindow import GameWindow
 from triggers import implement_triggers
 
 
@@ -13,10 +12,7 @@ def main():
 
     # Initialize MainWindow and app
     app = QtWidgets.QApplication(sys.argv)
-    window = MainWindow(player)
-
-    # Initialize game
-    new_game = Game(window)
+    window = GameWindow(player)
 
     # Implement triggers for menu items
     implement_triggers(window)

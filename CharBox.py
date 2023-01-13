@@ -9,7 +9,7 @@ class CharBox(QtWidgets.QLabel):
         self.setObjectName(obj_name)
         self.__text: str = " "
         self.set_text(self.__text)
-        self.set_status("incorrect")
+        self.set_status("blank")
 
         # Initialize font
         font = QtGui.QFont()
@@ -38,9 +38,15 @@ class CharBox(QtWidgets.QLabel):
     def set_status(self, _status):
         self.__status = _status
         match self.__status:
+            # Corresponds to gray color in Wordle
             case "incorrect":
                 self.setStyleSheet("background-color: rgb(128, 128, 128);\ncolor: white;")
+            # Corresponds to yellow color in Wordle
             case "partial":
                 self.setStyleSheet("background-color: rgb(255, 255, 0);\ncolor: white;")
+            # Corresponds to green color in Wordle
             case "correct":
                 self.setStyleSheet("background-color: rgb(0, 255, 0);\ncolor: white;")
+            # Corresponds with the blank color at the start of Wordle
+            case "blank":
+                self.setStyleSheet("background-color: rgb(255, 255, 255);\ncolor: black;")
