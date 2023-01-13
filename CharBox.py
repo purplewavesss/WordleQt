@@ -43,10 +43,12 @@ class CharBox(QtWidgets.QLabel):
                 self.setStyleSheet("background-color: rgb(128, 128, 128);\ncolor: white;")
             # Corresponds to yellow color in Wordle
             case "partial":
-                self.setStyleSheet("background-color: rgb(255, 255, 0);\ncolor: white;")
+                self.setStyleSheet("background-color: rgb(230, 230, 0);\ncolor: white;")
             # Corresponds to green color in Wordle
             case "correct":
                 self.setStyleSheet("background-color: rgb(0, 255, 0);\ncolor: white;")
             # Corresponds with the blank color at the start of Wordle
             case "blank":
                 self.setStyleSheet("background-color: rgb(255, 255, 255);\ncolor: black;")
+            case _:
+                raise ValueError("Incorrect status used!")

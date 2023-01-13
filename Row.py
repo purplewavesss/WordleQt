@@ -28,13 +28,23 @@ class Row:
         return self.__word
 
     def update_char_boxes(self):
-        # Clear char boxes
+        # Erase char box text
         for char_box in self.char_boxes:
             char_box.set_text(" ")
 
         # Fill char boxes with letters
         for letter_num in range(len(self.__char_list)):
             self.char_boxes[letter_num].set_text(self.__char_list[letter_num])
+
+    def clear_row(self):
+        for char_box in self.char_boxes:
+            char_box.set_text(" ")
+            char_box.set_status("blank")
+
+        # Clear all text
+        self.__word = ""
+        for chars in range(len(self.__char_list)):
+            self.remove_char()
 
     def update_word(self):
         self.__word = ""

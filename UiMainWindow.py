@@ -1,6 +1,5 @@
 # Form implementation generated from reading ui file 'C:\Users\School Account\Projects\Wordle\wordle.ui'
-
-from PyQt5 import QtCore, QtWidgets
+from PyQt5 import QtCore, QtWidgets, QtGui
 from CharBox import CharBox
 from Row import Row
 
@@ -12,6 +11,7 @@ class UiMainWindow(object):
         main_window.resize(310, 460)
         main_window.setAutoFillBackground(False)
         main_window.setStyleSheet("")
+        main_window.setWindowIcon(QtGui.QIcon("images/game_icon.ico"))
         self.central_widget = QtWidgets.QWidget(main_window)
         self.central_widget.setObjectName("central_widget")
         self.char_box_a1: CharBox = CharBox(self.central_widget, QtCore.QRect(10, 10, 50, 50), "char_box_a1")
@@ -107,9 +107,8 @@ class UiMainWindow(object):
                               self.char_box_e5))
         self.row6: Row = Row((self.char_box_f1, self.char_box_f2, self.char_box_f3, self.char_box_f4,
                               self.char_box_f5))
-        self.current_row = self.row1
-        self.rows: tuple[Row, Row, Row, Row, Row, Row] = (self.row1, self.row2, self.row3, self.row4, self.row5, self.row6)
-        self.row_indice = 0
+        self.rows: tuple[Row, Row, Row, Row, Row, Row] = (self.row1, self.row2, self.row3, self.row4, self.row5,
+                                                          self.row6)
 
         self.retranslate_ui(main_window)
         QtCore.QMetaObject.connectSlotsByName(main_window)

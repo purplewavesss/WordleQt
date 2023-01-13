@@ -4,15 +4,15 @@ from PyQt5 import QtWidgets
 from GameWindow import GameWindow
 
 
-def implement_triggers(window: GameWindow):
-    window.exit_action.triggered.connect(exit_action_triggers)
-    window.credits_action.triggered.connect(credit_action_triggers)
-    window.daily_game_action.triggered.connect(not_implemented)
-    window.practice_game_action.triggered.connect(not_implemented)
-    window.check_streak_action.triggered.connect(not_implemented)
-    window.check_stats_action.triggered.connect(not_implemented)
-    window.add_words_action.triggered.connect(not_implemented)
-    window.mode_action.triggered.connect(not_implemented)
+def implement_triggers(game_window: GameWindow):
+    game_window.exit_action.triggered.connect(exit_action_triggers)
+    game_window.credits_action.triggered.connect(credit_action_triggers)
+    game_window.daily_game_action.triggered.connect(lambda: daily_action_triggers(game_window))
+    game_window.practice_game_action.triggered.connect(lambda: practice_action_triggers(game_window))
+    game_window.check_streak_action.triggered.connect(not_implemented)
+    game_window.check_stats_action.triggered.connect(not_implemented)
+    game_window.add_words_action.triggered.connect(not_implemented)
+    game_window.mode_action.triggered.connect(not_implemented)
 
 
 def exit_action_triggers():
@@ -27,6 +27,14 @@ def credit_action_triggers():
                                 "Python\nDesigned in Qt, a GUI framework for C++ and Python")
     credits_message_box.setStandardButtons(QtWidgets.QMessageBox.Ok)
     credits_message_box.exec()
+
+
+def daily_action_triggers(game_window: GameWindow):
+    game_window.reset("daily")
+
+
+def practice_action_triggers(game_window: GameWindow):
+    game_window.reset("random")
 
 
 def not_implemented():
