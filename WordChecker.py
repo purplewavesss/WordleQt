@@ -4,6 +4,18 @@ from datetime import date, timedelta
 ORIGINAL_DATE = date(2023, 1, 13)
 
 
+def letter_count(word: str, char: str) -> int:
+    value = 0
+
+    if len(char) == 1:
+        for letter in range(len(word)):
+            if word[letter] == char:
+                value += 1
+        return value
+    else:
+        raise ValueError("Must input a length one character!")
+
+
 class WordChecker:
     def __init__(self):
         self.word = ""
@@ -43,6 +55,8 @@ class WordChecker:
 
     def check_word(self, guess: str) -> dict[int, str]:
         check_word_dict: dict[int, str] = {}
+        partial_dict: dict[str, int] = {}
+        letter_occurrences: int = 0
         guess = guess.lower()
 
         for x in range(len(self.word)):
@@ -53,7 +67,19 @@ class WordChecker:
                 # Check if guess letter exists somewhere else in the word
                 for y in range(len(self.word)):
                     if self.word[y] == guess[x] and self.word[y] != guess[y]:
+                        # Check if partial answer has already been accounted for
+                        if self.word[y] in partial_dict.keys():
+                            if partial_dict[self.word[y]] > letter_occurrences:
+                                partial_dict[self.word[y]] += 1
+                            else:
+                                check_word_dict.update({x + 1: "incorrect"})
+                                break
+                        else:
+                            # Add letter to partial_dict, to make sure the partial answer isn't accidentally repeated
+                            partial_dict.update({self.word[y]: letter_count(self.word, self.word[y])})
+
                         check_word_dict.update({x + 1: "partial"})
+                        letter_occurrences += 1
                         break
                     else:
                         check_word_dict.update({x + 1: "incorrect"})
