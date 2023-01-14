@@ -1,7 +1,7 @@
 import random
 from datetime import date, timedelta
 
-ORIGINAL_DATE = date(2023, 1, 13)
+ORIGINAL_DATE = date(2023, 1, 14)
 
 
 def letter_count(word: str, char: str) -> int:
