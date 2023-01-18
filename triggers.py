@@ -1,6 +1,7 @@
 # Creates triggers for menu items
 import sys
 from PyQt5 import QtWidgets
+from AddWordDialog import AddWordDialog
 from GameWindow import GameWindow
 
 
@@ -11,7 +12,7 @@ def implement_triggers(game_window: GameWindow):
     game_window.practice_game_action.triggered.connect(lambda: practice_action_triggers(game_window))
     game_window.check_streak_action.triggered.connect(not_implemented)
     game_window.check_stats_action.triggered.connect(not_implemented)
-    game_window.add_words_action.triggered.connect(not_implemented)
+    game_window.add_words_action.triggered.connect(add_words_action_triggers)
     game_window.mode_action.triggered.connect(not_implemented)
 
 
@@ -35,6 +36,11 @@ def daily_action_triggers(game_window: GameWindow):
 
 def practice_action_triggers(game_window: GameWindow):
     game_window.reset("random")
+
+
+def add_words_action_triggers():
+    add_word_dialog = AddWordDialog()
+    add_word_dialog.exec()
 
 
 def not_implemented():
