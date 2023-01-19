@@ -147,7 +147,7 @@ class GameWindow(QtWidgets.QMainWindow, UiMainWindow):
 
     def reset(self, _game_type: str, _word: str = ""):
         # Resets all game variables to their initial values
-        self.set_game_type(_game_type)
+        self.set_game_type(_game_type, _word)
         for row in self.rows:
             row.clear_row()
         self.guesses = []
@@ -155,7 +155,6 @@ class GameWindow(QtWidgets.QMainWindow, UiMainWindow):
         self.game_end = False
         self.current_row = self.row1
         self.row_index = 0
-        self.word_checker.word = _word
 
     def enter_case(self):
         if not self.game_end:
