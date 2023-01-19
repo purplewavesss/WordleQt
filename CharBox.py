@@ -20,7 +20,7 @@ class CharBox(QtWidgets.QLabel):
         font.setPointSize(28)
 
         self.setFont(font)
-        self.setAlignment(QtCore.Qt.AlignCenter)
+        self.setAlignment(QtCore.Qt.AlignmentFlag.AlignCenter)
 
     def get_text(self) -> str:
         return self.__text

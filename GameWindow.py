@@ -8,7 +8,7 @@ def gen_message_box(title: str, message: str, icon: QtWidgets.QMessageBox.Icon):
     message_box.setWindowTitle(title)
     message_box.setIcon(icon)
     message_box.setText(message)
-    message_box.setStandardButtons(QtWidgets.QMessageBox.Ok)
+    message_box.setStandardButtons(QtWidgets.QMessageBox.StandardButton.Ok)
     message_box.exec()
 
 
@@ -25,6 +25,7 @@ class GameWindow(QtWidgets.QMainWindow, UiMainWindow):
         self.game_end: bool = False
         self.current_row = self.row1
         self.row_index = 0
+        # noinspection PyUnresolvedReferences
         self.enter_button.clicked.connect(self.enter_case)
 
     def get_game_type(self) -> str:
@@ -40,61 +41,61 @@ class GameWindow(QtWidgets.QMainWindow, UiMainWindow):
     def key_parse(self, keyboard: QtGui.QKeyEvent):
         # Switch on key entered
         match keyboard.key():
-            case QtCore.Qt.Key_A:
+            case QtCore.Qt.Key.Key_A:
                 self.current_row.add_char("A")
-            case QtCore.Qt.Key_B:
+            case QtCore.Qt.Key.Key_B:
                 self.current_row.add_char("B")
-            case QtCore.Qt.Key_C:
+            case QtCore.Qt.Key.Key_C:
                 self.current_row.add_char("C")
-            case QtCore.Qt.Key_D:
+            case QtCore.Qt.Key.Key_D:
                 self.current_row.add_char("D")
-            case QtCore.Qt.Key_E:
+            case QtCore.Qt.Key.Key_E:
                 self.current_row.add_char("E")
-            case QtCore.Qt.Key_F:
+            case QtCore.Qt.Key.Key_F:
                 self.current_row.add_char("F")
-            case QtCore.Qt.Key_G:
+            case QtCore.Qt.Key.Key_G:
                 self.current_row.add_char("G")
-            case QtCore.Qt.Key_H:
+            case QtCore.Qt.Key.Key_H:
                 self.current_row.add_char("H")
-            case QtCore.Qt.Key_I:
+            case QtCore.Qt.Key.Key_I:
                 self.current_row.add_char("I")
-            case QtCore.Qt.Key_J:
+            case QtCore.Qt.Key.Key_J:
                 self.current_row.add_char("J")
-            case QtCore.Qt.Key_K:
+            case QtCore.Qt.Key.Key_K:
                 self.current_row.add_char("K")
-            case QtCore.Qt.Key_L:
+            case QtCore.Qt.Key.Key_L:
                 self.current_row.add_char("L")
-            case QtCore.Qt.Key_M:
+            case QtCore.Qt.Key.Key_M:
                 self.current_row.add_char("M")
-            case QtCore.Qt.Key_N:
+            case QtCore.Qt.Key.Key_N:
                 self.current_row.add_char("N")
-            case QtCore.Qt.Key_O:
+            case QtCore.Qt.Key.Key_O:
                 self.current_row.add_char("O")
-            case QtCore.Qt.Key_P:
+            case QtCore.Qt.Key.Key_P:
                 self.current_row.add_char("P")
-            case QtCore.Qt.Key_Q:
+            case QtCore.Qt.Key.Key_Q:
                 self.current_row.add_char("Q")
-            case QtCore.Qt.Key_R:
+            case QtCore.Qt.Key.Key_R:
                 self.current_row.add_char("R")
-            case QtCore.Qt.Key_S:
+            case QtCore.Qt.Key.Key_S:
                 self.current_row.add_char("S")
-            case QtCore.Qt.Key_T:
+            case QtCore.Qt.Key.Key_T:
                 self.current_row.add_char("T")
-            case QtCore.Qt.Key_U:
+            case QtCore.Qt.Key.Key_U:
                 self.current_row.add_char("U")
-            case QtCore.Qt.Key_V:
+            case QtCore.Qt.Key.Key_V:
                 self.current_row.add_char("V")
-            case QtCore.Qt.Key_W:
+            case QtCore.Qt.Key.Key_W:
                 self.current_row.add_char("W")
-            case QtCore.Qt.Key_X:
+            case QtCore.Qt.Key.Key_X:
                 self.current_row.add_char("X")
-            case QtCore.Qt.Key_Y:
+            case QtCore.Qt.Key.Key_Y:
                 self.current_row.add_char("Y")
-            case QtCore.Qt.Key_Z:
+            case QtCore.Qt.Key.Key_Z:
                 self.current_row.add_char("Z")
-            case QtCore.Qt.Key_Backspace:
+            case QtCore.Qt.Key.Key_Backspace:
                 self.current_row.remove_char()
-            case QtCore.Qt.Key_Return:
+            case QtCore.Qt.Key.Key_Return:
                 self.enter_case()
 
     def enter_word(self):
