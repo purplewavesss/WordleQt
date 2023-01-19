@@ -1,7 +1,7 @@
 import random
 from datetime import date, timedelta
 
-ORIGINAL_DATE = date(2023, 1, 14)
+ORIGINAL_DATE = date(2023, 1, 18)
 
 
 def letter_count(word: str, char: str) -> int:
@@ -32,9 +32,12 @@ class WordChecker:
     def get_game_type(self):
         return self.__game_type
 
-    def set_game_type(self, _game_type: str):
+    def set_game_type(self, _game_type: str, _word: str = ""):
         self.__game_type = _game_type
-        self.get_word()
+        if self.__game_type != "manual":
+            self.get_word()
+        else:
+            self.word = _word
 
     def get_word(self):
         # Store random word from list
@@ -58,6 +61,8 @@ class WordChecker:
         partial_dict: dict[str, int] = {}
         letter_occurrences: int = 0
         guess = guess.lower()
+
+        print(len(self.word))
 
         for x in range(len(self.word)):
             # Check if word letter and guess letter are the same

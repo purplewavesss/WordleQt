@@ -2,7 +2,7 @@
 import sys
 from PyQt5 import QtWidgets
 from AddWordDialog import AddWordDialog
-from GameWindow import GameWindow
+from GameWindow import GameWindow, gen_message_box
 
 
 def implement_triggers(game_window: GameWindow):
@@ -12,7 +12,7 @@ def implement_triggers(game_window: GameWindow):
     game_window.practice_game_action.triggered.connect(lambda: practice_action_triggers(game_window))
     game_window.check_streak_action.triggered.connect(not_implemented)
     game_window.check_stats_action.triggered.connect(not_implemented)
-    game_window.add_words_action.triggered.connect(add_words_action_triggers)
+    game_window.add_words_action.triggered.connect(lambda: add_words_action_triggers(game_window))
     game_window.mode_action.triggered.connect(not_implemented)
 
 
@@ -21,14 +21,9 @@ def exit_action_triggers():
 
 
 def credit_action_triggers():
-    credits_message_box = QtWidgets.QMessageBox()
-    credits_message_box.setWindowTitle("Credits")
-    credits_message_box.setIcon(QtWidgets.QMessageBox.Information)
-    credits_message_box.setText("Created by Gavin J. Grotegut\nBased on Wordle, a game by Josh Wardle\nCoded in "
-                                "Python\nDesigned in Qt, a GUI framework for C++ and Python")
-    credits_message_box.setStandardButtons(QtWidgets.QMessageBox.Ok)
-    credits_message_box.exec()
-
+    gen_message_box("Credits", "Created by Gavin J. Grotegut\nBased on Wordle, a game by Josh Wardle\nCoded in Python\n"
+                               "Designed in Qt, a GUI framework for C++ and Python",
+                    QtWidgets.QMessageBox.Icon.Information)
 
 def daily_action_triggers(game_window: GameWindow):
     game_window.reset("daily")
@@ -38,8 +33,8 @@ def practice_action_triggers(game_window: GameWindow):
     game_window.reset("random")
 
 
-def add_words_action_triggers():
-    add_word_dialog = AddWordDialog()
+def add_words_action_triggers(game_window: GameWindow):
+    add_word_dialog = AddWordDialog(game_window)
     add_word_dialog.exec()
 
 
