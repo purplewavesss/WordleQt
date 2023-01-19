@@ -1,3 +1,5 @@
 /.idea
+/WordleQt.pyproject.user
 /venv/
 /.mypy_cache/
+/.ropeproject/
