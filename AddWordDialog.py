@@ -17,7 +17,6 @@ class AddWordDialog(QtWidgets.QDialog, UiAddWordDialog):
         self.accept()
 
     def apply(self):
-        print(len(self.word_text_edit.text()))
         if len(self.word_text_edit.text()) == 5:
             # Append word
             with open("words/real-answers.txt", "a") as fs:
