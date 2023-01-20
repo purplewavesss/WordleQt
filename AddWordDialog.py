@@ -1,5 +1,5 @@
 from PyQt5 import QtWidgets
-from GameWindow import GameWindow, gen_message_box
+from GameWindow import GameWindow
 from UiAddWordDialog import UiAddWordDialog
 
 
@@ -29,8 +29,8 @@ class AddWordDialog(QtWidgets.QDialog, UiAddWordDialog):
             self.word_text_edit.setText("")
 
         elif len(self.word_text_edit.text()) != 0:
-            gen_message_box("Not five letters!", "The word you added was not five letters long.",
-                            QtWidgets.QMessageBox.Icon.Warning)
+            self.game_window.gen_message_box("Not five letters!", "The word you added was not five letters long.",
+                                             QtWidgets.QMessageBox.Icon.Warning)
 
     def gen_set_word_message_box(self):
         # Create message box

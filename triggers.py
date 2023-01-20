@@ -2,7 +2,8 @@
 import sys
 from PyQt5 import QtWidgets
 from AddWordDialog import AddWordDialog
-from GameWindow import GameWindow, gen_message_box
+from GameWindow import GameWindow
+from SettingsDialog import SettingsDialog
 
 
 def implement_triggers(game_window: GameWindow):
@@ -13,7 +14,7 @@ def implement_triggers(game_window: GameWindow):
     game_window.check_streak_action.triggered.connect(not_implemented)
     game_window.check_stats_action.triggered.connect(not_implemented)
     game_window.add_words_action.triggered.connect(lambda: add_words_action_triggers(game_window))
-    game_window.settings_action.triggered.connect(not_implemented)
+    game_window.settings_action.triggered.connect(settings_action_triggers)
 
 
 def exit_action_triggers():
@@ -21,9 +22,9 @@ def exit_action_triggers():
 
 
 def credit_action_triggers():
-    gen_message_box("Credits", "Created by Gavin J. Grotegut\nBased on Wordle, a game by Josh Wardle\nCoded in Python\n"
-                               "Designed in Qt, a GUI framework for C++ and Python",
-                    QtWidgets.QMessageBox.Icon.Information)
+    GameWindow.gen_message_box("Credits", "Created by Gavin J. Grotegut\nBased on Wordle, a game by Josh Wardle\n"
+                               "Coded in Python\nDesigned in Qt, a GUI framework for C++ and Python",
+                               QtWidgets.QMessageBox.Icon.Information)
 
 
 def daily_action_triggers(game_window: GameWindow):
@@ -40,7 +41,8 @@ def add_words_action_triggers(game_window: GameWindow):
 
 
 def settings_action_triggers():
-    pass
+    settings_dialog = SettingsDialog()
+    settings_dialog.exec()
 
 
 def not_implemented():

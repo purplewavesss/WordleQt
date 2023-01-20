@@ -1,15 +1,8 @@
 from PyQt5 import QtWidgets, QtGui, QtCore
+from Row import Row
+from StatsChecker import StatsChecker
 from UiMainWindow import UiMainWindow
 from WordChecker import WordChecker
-
-
-def gen_message_box(title: str, message: str, icon: QtWidgets.QMessageBox.Icon):
-    message_box = QtWidgets.QMessageBox()
-    message_box.setWindowTitle(title)
-    message_box.setIcon(icon)
-    message_box.setText(message)
-    message_box.setStandardButtons(QtWidgets.QMessageBox.StandardButton.Ok)
-    message_box.exec()
 
 
 # Encapsulates a main window and the functions of its items
@@ -17,15 +10,15 @@ class GameWindow(QtWidgets.QMainWindow, UiMainWindow):
     def __init__(self, *args, **kwargs):
         super(GameWindow, self).__init__(*args, **kwargs)
         self.setup_ui(self)
-        self.__game_type = ""
+        self.__game_type: str = ""
         self.word_checker = WordChecker()
+        self.stats_checker = StatsChecker()
         self.set_game_type("daily")
         self.guesses: list[str] = []
         self.won: bool = False
-        self.game_end: bool = False
-        self.current_row = self.row1
-        self.row_index = 0
-        # noinspection PyUnresolvedReferences
+        self.__game_end: bool = False
+        self.current_row: Row = self.row1
+        self.row_index: int = 0
         self.enter_button.clicked.connect(self.enter_case)
 
     def get_game_type(self) -> str:
@@ -34,6 +27,16 @@ class GameWindow(QtWidgets.QMainWindow, UiMainWindow):
     def set_game_type(self, _game_type: str, _word: str = ""):
         self.__game_type = _game_type
         self.word_checker.set_game_type(self.__game_type, _word)
+        self.stats_checker.game_type = self.__game_type
+
+    def get_game_end(self) -> bool:
+        return self.__game_end
+
+    def set_game_end(self, _game_end: bool):
+        self.__game_end = _game_end
+        if self.__game_end:
+            self.stats_checker.add_score(len(self.guesses))
+            self.enter_case()
 
     def keyPressEvent(self, a0: QtGui.QKeyEvent) -> None:
         self.key_parse(a0)
@@ -120,9 +123,10 @@ class GameWindow(QtWidgets.QMainWindow, UiMainWindow):
 
             # Loss scenario
             if self.row_index == 5 and not self.won:
-                gen_message_box("Loser", f'You lost! The word was {self.word_checker.word.upper()}.',
-                                QtWidgets.QMessageBox.Icon.NoIcon)
-                self.game_end = True
+                self.gen_message_box("Loser", f'You lost! The word was {self.word_checker.word.upper()}.',
+                                     QtWidgets.QMessageBox.Icon.NoIcon)
+                self.stats_checker.add_score(len(self.guesses))
+                self.set_game_end(True)
 
             else:
                 # If not last row, switch to next row
@@ -132,19 +136,19 @@ class GameWindow(QtWidgets.QMainWindow, UiMainWindow):
 
                 # If won, display win message
                 elif self.won:
-                    gen_message_box("Winner", f'You won after {len(self.guesses)} guesses!',
-                                    QtWidgets.QMessageBox.Icon.NoIcon)
-                    self.game_end = True
+                    self.gen_message_box("Winner", f'You won after {len(self.guesses)} guesses!',
+                                         QtWidgets.QMessageBox.Icon.NoIcon)
+                    self.set_game_end(True)
 
         # Invalid word
         elif len(self.current_row.get_word()) == 5 and len(self.guesses) < 6 and not self.word_checker.valid_check(
                 self.current_row.get_word()):
-            gen_message_box("Invalid guess!", f'Your guess "{self.current_row.get_word()}" was not in the word list.',
-                            QtWidgets.QMessageBox.Icon.Warning)
+            self.gen_message_box("Invalid guess!", f'Your guess "{self.current_row.get_word()}" was not in the word '
+                                                   f'list.', QtWidgets.QMessageBox.Icon.Warning)
 
         elif len(self.current_row.get_word()) != 5:
-            gen_message_box("Invalid guess!", f'Your guess was not five letters long!',
-                            QtWidgets.QMessageBox.Icon.Warning)
+            self.gen_message_box("Invalid guess!", f'Your guess was not five letters long!',
+                                 QtWidgets.QMessageBox.Icon.Warning)
 
     def reset(self, _game_type: str, _word: str = ""):
         # Resets all game variables to their initial values
@@ -153,12 +157,21 @@ class GameWindow(QtWidgets.QMainWindow, UiMainWindow):
             row.clear_row()
         self.guesses = []
         self.won = False
-        self.game_end = False
+        self.set_game_end(False)
         self.current_row = self.row1
         self.row_index = 0
 
     def enter_case(self):
-        if not self.game_end:
+        if not self.get_game_end():
             self.enter_word()
         else:
             self.reset("random")
+
+    @staticmethod
+    def gen_message_box(title: str, message: str, icon: QtWidgets.QMessageBox.Icon):
+        message_box = QtWidgets.QMessageBox()
+        message_box.setWindowTitle(title)
+        message_box.setIcon(icon)
+        message_box.setText(message)
+        message_box.setStandardButtons(QtWidgets.QMessageBox.StandardButton.Ok)
+        message_box.exec()

@@ -1,19 +1,7 @@
 import random
 from datetime import date, timedelta
 
-ORIGINAL_DATE = date(2023, 1, 18)
-
-
-def letter_count(word: str, char: str) -> int:
-    value = 0
-
-    if len(char) == 1:
-        for letter in range(len(word)):
-            if word[letter] == char:
-                value += 1
-        return value
-    else:
-        raise ValueError("Must input a length one character!")
+ORIGINAL_DATE = date(2023, 1, 20)
 
 
 class WordChecker:
@@ -62,8 +50,6 @@ class WordChecker:
         letter_occurrences: int = 0
         guess = guess.lower()
 
-        print(len(self.word))
-
         for x in range(len(self.word)):
             # Check if word letter and guess letter are the same
             if self.word[x] == guess[x]:
@@ -81,7 +67,7 @@ class WordChecker:
                                 break
                         else:
                             # Add letter to partial_dict, to make sure the partial answer isn't accidentally repeated
-                            partial_dict.update({self.word[y]: letter_count(self.word, self.word[y])})
+                            partial_dict.update({self.word[y]: self.letter_count(self.word, self.word[y])})
 
                         check_word_dict.update({x + 1: "partial"})
                         letter_occurrences += 1
@@ -94,3 +80,15 @@ class WordChecker:
         if guess.lower() in self.word_list:
             return True
         return False
+
+    @staticmethod
+    def letter_count(word: str, char: str) -> int:
+        value = 0
+
+        if len(char) == 1:
+            for letter in range(len(word)):
+                if word[letter] == char:
+                    value += 1
+            return value
+        else:
+            raise ValueError("Must input a length one character!")

@@ -4,4 +4,5 @@ from UiSettingsDialog import UiSettingsDialog
 
 class SettingsDialog(QtWidgets.QDialog, UiSettingsDialog):
     def __init__(self):
-        super(UiSettingsDialog, self).__init__()
+        super(SettingsDialog, self).__init__()
+        self.setup_ui(self)
