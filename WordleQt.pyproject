@@ -1,3 +1,0 @@
-{
-    "files": ["main.py", "words/daily-answers.txt", "words/potential-answers.txt", "words/real-answers.txt", ".gitignore", "addword.ui", "AddWordDialog.py", "CharBox.py", "GameWindow.py", "main.py", "Row.py"m "triggers.py", "UiAddWordDialog.py", "UiMainWindow.py", "WordChecker.py", "wordle.ui"]
-}

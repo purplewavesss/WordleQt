@@ -1,6 +1,6 @@
 from PyQt5 import QtWidgets, QtGui, QtCore
 from Row import Row
-from StatsChecker import StatsChecker
+from GameStats import GameStats
 from UiMainWindow import UiMainWindow
 from WordChecker import WordChecker
 
@@ -12,7 +12,7 @@ class GameWindow(QtWidgets.QMainWindow, UiMainWindow):
         self.setup_ui(self)
         self.__game_type: str = ""
         self.word_checker = WordChecker()
-        self.stats_checker = StatsChecker()
+        self.stats = GameStats()
         self.set_game_type("daily")
         self.guesses: list[str] = []
         self.won: bool = False
@@ -27,7 +27,7 @@ class GameWindow(QtWidgets.QMainWindow, UiMainWindow):
     def set_game_type(self, _game_type: str, _word: str = ""):
         self.__game_type = _game_type
         self.word_checker.set_game_type(self.__game_type, _word)
-        self.stats_checker.game_type = self.__game_type
+        self.stats.game_type = self.__game_type
 
     def get_game_end(self) -> bool:
         return self.__game_end
@@ -35,7 +35,7 @@ class GameWindow(QtWidgets.QMainWindow, UiMainWindow):
     def set_game_end(self, _game_end: bool):
         self.__game_end = _game_end
         if self.__game_end:
-            self.stats_checker.add_score(len(self.guesses))
+            self.stats.add_score(len(self.guesses))
             self.enter_case()
 
     def keyPressEvent(self, a0: QtGui.QKeyEvent) -> None:
@@ -125,7 +125,7 @@ class GameWindow(QtWidgets.QMainWindow, UiMainWindow):
             if self.row_index == 5 and not self.won:
                 self.gen_message_box("Loser", f'You lost! The word was {self.word_checker.word.upper()}.',
                                      QtWidgets.QMessageBox.Icon.NoIcon)
-                self.stats_checker.add_score(len(self.guesses))
+                self.stats.add_score(len(self.guesses))
                 self.set_game_end(True)
 
             else:
