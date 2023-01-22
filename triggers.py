@@ -6,7 +6,7 @@ from GameWindow import GameWindow
 from SettingsDialog import SettingsDialog
 
 
-def implement_triggers(game_window: GameWindow):
+def implement_triggers(game_window: GameWindow, settings_dialog: SettingsDialog):
     game_window.exit_action.triggered.connect(exit_action_triggers)
     game_window.credits_action.triggered.connect(credit_action_triggers)
     game_window.daily_game_action.triggered.connect(lambda: daily_action_triggers(game_window))
@@ -14,7 +14,7 @@ def implement_triggers(game_window: GameWindow):
     game_window.check_streak_action.triggered.connect(not_implemented)
     game_window.check_stats_action.triggered.connect(not_implemented)
     game_window.add_words_action.triggered.connect(lambda: add_words_action_triggers(game_window))
-    game_window.settings_action.triggered.connect(settings_action_triggers)
+    game_window.settings_action.triggered.connect(settings_dialog.exec)
 
 
 def exit_action_triggers():
@@ -38,11 +38,6 @@ def practice_action_triggers(game_window: GameWindow):
 def add_words_action_triggers(game_window: GameWindow):
     add_word_dialog = AddWordDialog(game_window)
     add_word_dialog.exec()
-
-
-def settings_action_triggers():
-    settings_dialog = SettingsDialog()
-    settings_dialog.exec()
 
 
 def not_implemented():

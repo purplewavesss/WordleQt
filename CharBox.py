@@ -9,13 +9,14 @@ class CharBox(QtWidgets.QLabel):
         self.setObjectName(obj_name)
         self.__text: str = " "
         self.set_text(self.__text)
+        self.__status: str = ""
         self.set_status("blank")
 
         # Initialize font
         font = QtGui.QFont()
         try:
             font.setFamily("Bahnschrift")
-        except:
+        except OSError:
             font.setFamily("Arial")
         font.setPointSize(28)
 

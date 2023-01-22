@@ -14,11 +14,14 @@ class GameWindow(QtWidgets.QMainWindow, UiMainWindow):
         self.word_checker = WordChecker()
         self.stats = GameStats()
         self.set_game_type("daily")
+        self.hard_mode: bool = False
+        self.light_mode: bool = True
         self.guesses: list[str] = []
         self.won: bool = False
         self.__game_end: bool = False
         self.current_row: Row = self.row1
         self.row_index: int = 0
+        self.first_time: bool = True
         self.enter_button.clicked.connect(self.enter_case)
 
     def get_game_type(self) -> str:
@@ -106,6 +109,7 @@ class GameWindow(QtWidgets.QMainWindow, UiMainWindow):
         if len(self.current_row.get_word()) == 5 and len(self.guesses) < 6 and self.word_checker.valid_check(
                 self.current_row.get_word()):
             self.guesses.append(self.current_row.get_word())
+            self.first_time = False
 
             # Generate dictionary for CharBox color statuses
             word_dict = self.word_checker.check_word(self.current_row.get_word())
