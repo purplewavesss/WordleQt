@@ -1,3 +1,6 @@
+LOSE_SCORE: int = 7
+
+
 from PyQt5 import QtWidgets, QtGui, QtCore
 from Row import Row
 from GameStats import GameStats
@@ -7,12 +10,12 @@ from WordChecker import WordChecker
 
 # Encapsulates a main window and the functions of its items
 class GameWindow(QtWidgets.QMainWindow, UiMainWindow):
-    def __init__(self, *args, **kwargs):
+    def __init__(self, _stats: GameStats, *args, **kwargs):
         super(GameWindow, self).__init__(*args, **kwargs)
         self.setup_ui(self)
         self.__game_type: str = ""
         self.word_checker = WordChecker()
-        self.stats = GameStats()
+        self.stats = _stats
         self.set_game_type("daily")
         self.hard_mode: bool = False
         self.light_mode: bool = True
@@ -129,7 +132,7 @@ class GameWindow(QtWidgets.QMainWindow, UiMainWindow):
             if self.row_index == 5 and not self.won:
                 self.gen_message_box("Loser", f'You lost! The word was {self.word_checker.word.upper()}.',
                                      QtWidgets.QMessageBox.Icon.NoIcon)
-                self.stats.add_score(len(self.guesses))
+                self.stats.add_score(LOSE_SCORE)
                 self.set_game_end(True)
 
             else:

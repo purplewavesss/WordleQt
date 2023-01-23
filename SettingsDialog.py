@@ -32,18 +32,18 @@ class SettingsDialog(QtWidgets.QDialog, UiSettingsDialog):
         self.dark_mode_option.setChecked(not self.settings_dict["Light"])
 
     def register_settings_change(self, radio_button: QtWidgets.QRadioButton):
-         match radio_button.objectName():
-             case "hard_mode_on":
-                 self.settings_dict["Hard"] = True
+        match radio_button.objectName():
+            case "hard_mode_on":
+                self.settings_dict["Hard"] = True
 
-             case "hard_mode_off":
-                 self.settings_dict["Hard"] = False
+            case "hard_mode_off":
+                self.settings_dict["Hard"] = False
 
-             case "light_mode":
-                 self.settings_dict["Light"] = True
+            case "light_mode":
+                self.settings_dict["Light"] = True
 
-             case "dark_mode":
-                 self.settings_dict["Light"] = False
+            case "dark_mode":
+                self.settings_dict["Light"] = False
 
     def reset_streak(self):
         pass

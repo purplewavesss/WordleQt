@@ -1,5 +1,6 @@
 import sys
 from PyQt5 import QtWidgets
+from GameStats import GameStats
 from GameWindow import GameWindow
 from SettingsDialog import SettingsDialog
 from triggers import implement_triggers
@@ -7,9 +8,10 @@ from triggers import implement_triggers
 
 # Initializes and displays game
 def main():
-    # Initialize MainWindow and app
+    # Initialize windows/apps
     app = QtWidgets.QApplication(sys.argv)
-    window = GameWindow()
+    stats = GameStats()
+    window = GameWindow(stats)
 
     # Initialize settings
     settings_dialog = SettingsDialog(window)

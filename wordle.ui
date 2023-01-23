@@ -943,12 +943,12 @@ color: white;</string>
     <addaction name="check_streak_action"/>
     <addaction name="check_stats_action"/>
    </widget>
-   <widget class="QMenu" name="settings_menu">
+   <widget class="QMenu" name="tools_menu">
     <property name="title">
-     <string>Settings</string>
+     <string>Tools</string>
     </property>
     <addaction name="add_words_action"/>
-    <addaction name="mode_action"/>
+    <addaction name="settings_action"/>
    </widget>
    <widget class="QMenu" name="about_menu">
     <property name="title">
@@ -959,7 +959,7 @@ color: white;</string>
    </widget>
    <addaction name="file_menu"/>
    <addaction name="game_menu"/>
-   <addaction name="settings_menu"/>
+   <addaction name="tools_menu"/>
    <addaction name="about_menu"/>
   </widget>
   <action name="actionExit">
@@ -982,9 +982,9 @@ color: white;</string>
     <string>Add Words</string>
    </property>
   </action>
-  <action name="mode_action">
+  <action name="settings_action">
    <property name="text">
-    <string>Mode</string>
+    <string>Settings</string>
    </property>
   </action>
   <action name="check_stats_action">

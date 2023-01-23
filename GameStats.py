@@ -1,3 +1,6 @@
+POTENTIAL_CORRECT_GUESSES: int = 6
+
+
 class GameStats:
     def __init__(self):
         self.game_type: str = ""
@@ -31,4 +34,15 @@ class GameStats:
             if x != 6:
                 self.stats_dict.update({str(x + 1): stats_list[x]})
             else:
-                self.stats_dict.update({"Lost": stats_list[x]})
+                self.stats_dict.update({"x": stats_list[x]})
+
+    def average(self) -> float:
+        guess_sum: int = 0
+        guess_num: int = 0
+
+        for num_key in self.stats_dict.keys():
+            if num_key != "x":
+                guess_sum += int(num_key) * self.stats_dict[num_key]
+                guess_num += self.stats_dict[num_key]
+
+        return guess_sum / guess_num
