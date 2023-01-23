@@ -1,11 +1,11 @@
-LOSE_SCORE: int = 7
-
-
 from PyQt5 import QtWidgets, QtGui, QtCore
 from Row import Row
 from GameStats import GameStats
 from UiMainWindow import UiMainWindow
 from WordChecker import WordChecker
+
+
+LOSE_SCORE: int = 7
 
 
 # Encapsulates a main window and the functions of its items
@@ -34,14 +34,18 @@ class GameWindow(QtWidgets.QMainWindow, UiMainWindow):
         self.__game_type = _game_type
         self.word_checker.set_game_type(self.__game_type, _word)
         self.stats.game_type = self.__game_type
+        self.stats.gen_stats_dict("stats/" + self.stats.game_type + "_stats.txt")
 
     def get_game_end(self) -> bool:
         return self.__game_end
 
-    def set_game_end(self, _game_end: bool):
+    def set_game_end(self, _game_end: bool, lose: bool):
         self.__game_end = _game_end
         if self.__game_end:
-            self.stats.add_score(len(self.guesses))
+            if not lose:
+                self.stats.add_score(len(self.guesses))
+            else:
+                self.stats.add_score(7)
             self.enter_case()
 
     def keyPressEvent(self, a0: QtGui.QKeyEvent) -> None:
@@ -132,8 +136,7 @@ class GameWindow(QtWidgets.QMainWindow, UiMainWindow):
             if self.row_index == 5 and not self.won:
                 self.gen_message_box("Loser", f'You lost! The word was {self.word_checker.word.upper()}.',
                                      QtWidgets.QMessageBox.Icon.NoIcon)
-                self.stats.add_score(LOSE_SCORE)
-                self.set_game_end(True)
+                self.set_game_end(True, True)
 
             else:
                 # If not last row, switch to next row
@@ -145,7 +148,7 @@ class GameWindow(QtWidgets.QMainWindow, UiMainWindow):
                 elif self.won:
                     self.gen_message_box("Winner", f'You won after {len(self.guesses)} guesses!',
                                          QtWidgets.QMessageBox.Icon.NoIcon)
-                    self.set_game_end(True)
+                    self.set_game_end(True, False)
 
         # Invalid word
         elif len(self.current_row.get_word()) == 5 and len(self.guesses) < 6 and not self.word_checker.valid_check(
@@ -164,7 +167,6 @@ class GameWindow(QtWidgets.QMainWindow, UiMainWindow):
             row.clear_row()
         self.guesses = []
         self.won = False
-        self.set_game_end(False)
         self.current_row = self.row1
         self.row_index = 0
 
