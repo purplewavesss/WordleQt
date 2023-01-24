@@ -1,7 +1,7 @@
 from PyQt5 import QtWidgets, QtGui, QtCore
 from Row import Row
 from GameStats import GameStats
-from UiMainWindow import UiMainWindow
+from UiGameWindow import UiMainWindow
 from WordChecker import WordChecker
 
 
@@ -34,7 +34,6 @@ class GameWindow(QtWidgets.QMainWindow, UiMainWindow):
         self.__game_type = _game_type
         self.word_checker.set_game_type(self.__game_type, _word)
         self.stats.game_type = self.__game_type
-        self.stats.gen_stats_dict("stats/" + self.stats.game_type + "_stats.txt")
 
     def get_game_end(self) -> bool:
         return self.__game_end
@@ -175,6 +174,7 @@ class GameWindow(QtWidgets.QMainWindow, UiMainWindow):
             self.enter_word()
         else:
             self.reset("random")
+            self.set_game_end(False, False)
 
     @staticmethod
     def gen_message_box(title: str, message: str, icon: QtWidgets.QMessageBox.Icon):

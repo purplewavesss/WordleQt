@@ -2,19 +2,21 @@
 import sys
 from PyQt5 import QtWidgets
 from AddWordDialog import AddWordDialog
+from GameStats import GameStats
 from GameWindow import GameWindow
 from SettingsDialog import SettingsDialog
+from StatisticsDialog import StatisticsDialog
 
 
-def implement_triggers(game_window: GameWindow, settings_dialog: SettingsDialog):
+def implement_triggers(game_window: GameWindow, settings_dialog: SettingsDialog, game_stats: GameStats):
     game_window.exit_action.triggered.connect(exit_action_triggers)
     game_window.credits_action.triggered.connect(credit_action_triggers)
     game_window.daily_game_action.triggered.connect(lambda: daily_action_triggers(game_window))
     game_window.practice_game_action.triggered.connect(lambda: practice_action_triggers(game_window))
     game_window.check_streak_action.triggered.connect(not_implemented)
-    game_window.check_daily_stats_action.triggered.connect(not_implemented)
-    game_window.check_practice_stats_action.triggered.connect(not_implemented)
-    game_window.check_combined_stats_action.triggered.connect(not_implemented)
+    game_window.check_daily_stats_action.triggered.connect(lambda: create_statistics_dialog(game_stats, "Daily"))
+    game_window.check_practice_stats_action.triggered.connect(lambda: create_statistics_dialog(game_stats, "Practice"))
+    game_window.check_combined_stats_action.triggered.connect(lambda: create_statistics_dialog(game_stats, "Combined"))
     game_window.add_words_action.triggered.connect(lambda: add_words_action_triggers(game_window))
     game_window.settings_action.triggered.connect(settings_dialog.exec)
 
@@ -35,6 +37,11 @@ def daily_action_triggers(game_window: GameWindow):
 
 def practice_action_triggers(game_window: GameWindow):
     game_window.reset("random")
+
+
+def create_statistics_dialog(game_stats, data_type: str):
+    statistics_dialog = StatisticsDialog(game_stats, data_type)
+    statistics_dialog.exec()
 
 
 def add_words_action_triggers(game_window: GameWindow):

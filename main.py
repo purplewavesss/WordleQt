@@ -19,7 +19,7 @@ def main():
     settings_dialog.change_settings()
 
     # Implement triggers for menu items
-    implement_triggers(window, settings_dialog)
+    implement_triggers(window, settings_dialog, stats)
 
     # Open window
     window.show()

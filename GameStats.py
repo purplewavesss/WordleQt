@@ -15,7 +15,6 @@ class GameStats:
             self.gen_stats_dict("stats/" + self.game_type + "_stats.txt")
         self.daily_stats_dict = self.gen_stats_dict("stats/daily_stats.txt")
         self.random_stats_dict = self.gen_stats_dict("stats/random_stats.txt")
-        print(self.daily_stats_dict)
         self.gen_combined_dict()
 
     @staticmethod
