@@ -17,6 +17,7 @@ class SettingsDialog(QtWidgets.QDialog, UiSettingsDialog):
         self.dark_mode_option.toggled.connect(lambda: self.register_settings_change(self.dark_mode_option))
         self.reset_streak_button.clicked.connect(self.reset_streak)
         self.button_box.accepted.connect(self.change_settings)
+        self.reset = False
 
     def read_settings(self):
         # Parse settings.txt
@@ -46,7 +47,33 @@ class SettingsDialog(QtWidgets.QDialog, UiSettingsDialog):
                 self.settings_dict["Light"] = False
 
     def reset_streak(self):
-        pass
+        streak_message_box = QtWidgets.QMessageBox()
+        streak_message_box.setWindowTitle("Do you want to reset your streak?")
+        streak_message_box.setIcon(QtWidgets.QMessageBox.Icon.Information)
+        streak_message_box.setText("This will also reset your statistics.")
+
+        # Create buttons
+        yes_button = QtWidgets.QPushButton()
+        yes_button.setText("Yes")
+        no_button = QtWidgets.QPushButton()
+        no_button.setText("No")
+        yes_button.clicked.connect(lambda: self.yes_reset(streak_message_box, True))
+        no_button.clicked.connect(streak_message_box.reject)
+
+        streak_message_box.addButton(yes_button, QtWidgets.QMessageBox.ButtonRole.YesRole)
+        streak_message_box.addButton(no_button, QtWidgets.QMessageBox.ButtonRole.NoRole)
+
+        streak_message_box.exec()
+
+        if self.reset:
+            self.game_window.stats.clear_file("stats/daily_stats.txt")
+            self.game_window.stats.clear_file("stats/random_stats.txt")
+            self.game_window.stats.clear_file("stats/dates.txt")
+            self.game_window.stats.streak = 0
+            self.game_window.stats.daily_stats_dict = {}
+            self.game_window.stats.random_stats_dict = {}
+            self.game_window.stats.gen_combined_dict()
+            self.reset = False
 
     def change_settings(self):
         was_hard_mode = self.game_window.hard_mode
@@ -67,3 +94,7 @@ class SettingsDialog(QtWidgets.QDialog, UiSettingsDialog):
             for setting in self.settings_dict.keys():
                 settings_str += bool_to_binary_char(self.settings_dict[setting])
             fs.write(settings_str)
+
+    def yes_reset(self, msg_box: QtWidgets.QMessageBox, _reset: bool):
+        self.reset = _reset
+        msg_box.accept()

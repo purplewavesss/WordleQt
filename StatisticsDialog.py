@@ -43,3 +43,4 @@ class StatisticsDialog(QtWidgets.QDialog, UiStatisticsDialog):
         else:
             GameWindow.gen_message_box("No statistics!", "There are no statistics to show!",
                                        QtWidgets.QMessageBox.Icon.Critical)
+            self.close()

@@ -12,7 +12,6 @@ class GameStats:
         self.streak: int = 0
         self.gen_combined_dict()
         self.check_streak()
-        print(self.streak)
 
     def add_score(self, guesses: int):
         with open("stats/" + self.game_type + "_stats.txt", 'a') as fs:
@@ -31,7 +30,7 @@ class GameStats:
 
             if days > 1:
                 self.streak = 0
-                self.reset_streak()
+                self.clear_file("stats/dates.txt")
             else:
                 self.streak = len(dates) - 1
 
@@ -97,6 +96,6 @@ class GameStats:
             return False
 
     @staticmethod
-    def reset_streak():
-        with open("stats/dates.txt", "w") as fs:
+    def clear_file(file: str):
+        with open(file, "w") as fs:
             fs.write("")

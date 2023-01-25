@@ -2,6 +2,7 @@
 import sys
 from PyQt5 import QtWidgets
 from AddWordDialog import AddWordDialog
+from GameStats import GameStats
 from GameWindow import GameWindow
 from SettingsDialog import SettingsDialog
 from StatisticsDialog import StatisticsDialog
@@ -12,7 +13,7 @@ def implement_triggers(game_window: GameWindow, settings_dialog: SettingsDialog)
     game_window.credits_action.triggered.connect(credit_action_triggers)
     game_window.daily_game_action.triggered.connect(lambda: daily_action_triggers(game_window))
     game_window.practice_game_action.triggered.connect(lambda: practice_action_triggers(game_window))
-    game_window.check_streak_action.triggered.connect(not_implemented)
+    game_window.check_streak_action.triggered.connect(lambda: check_streak_triggers(game_window.stats))
     game_window.check_daily_stats_action.triggered.connect(lambda: create_statistics_dialog(game_window.stats, "Daily"))
     game_window.check_practice_stats_action.triggered.connect(lambda: create_statistics_dialog(game_window.stats,
                                                                                                "Practice"))
@@ -50,5 +51,10 @@ def add_words_action_triggers(game_window: GameWindow):
     add_word_dialog.exec()
 
 
-def not_implemented():
-    raise NotImplementedError
+def check_streak_triggers(game_stats: GameStats):
+    if game_stats.streak != 1:
+        GameWindow.gen_message_box("Streak", f'You have a streak of {game_stats.streak} days!',
+                                   QtWidgets.QMessageBox.Icon.NoIcon)
+    else:
+        GameWindow.gen_message_box("Streak", f'You have a streak of {game_stats.streak} day!',
+                                   QtWidgets.QMessageBox.Icon.NoIcon)
