@@ -2,11 +2,11 @@ from PyQt5 import QtWidgets, QtCore, QtGui
 
 
 class HistogramBar(QtWidgets.QLabel):
-    def __init__(self, parent: QtWidgets.QDialog, y: int):
+    def __init__(self, parent: QtWidgets.QDialog, y: int, _label_font: QtGui.QFont):
         super().__init__()
         self.setParent(parent)
         self.setGeometry(QtCore.QRect(40, y, 350, 25))
-        self.setStyleSheet("background-color: rgb(128, 128, 128);\ncolor: white;")
+        self.setStyleSheet("background-color: rgb(128, 128, 128);")
         self.__percentage: float = 0.0
 
     def get_percentage(self) -> float:

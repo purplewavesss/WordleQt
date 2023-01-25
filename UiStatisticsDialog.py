@@ -9,9 +9,15 @@ class UiStatisticsDialog(object):
     def setup_ui(self, stats_dialog):
         stats_dialog.setObjectName("stats_dialog")
         stats_dialog.resize(400, 330)
+
+        # Initialize font
         font = QtGui.QFont()
-        font.setFamily("Bahnschrift")
+        try:
+            font.setFamily("Bahnschrift")
+        except OSError:
+            font.setFamily("Arial")
         font.setPointSize(16)
+
         self.buttonBox = QtWidgets.QDialogButtonBox(stats_dialog)
         self.buttonBox.setGeometry(QtCore.QRect(310, 290, 80, 30))
         self.buttonBox.setOrientation(QtCore.Qt.Vertical)
@@ -45,13 +51,13 @@ class UiStatisticsDialog(object):
         self.fail_label.setGeometry(QtCore.QRect(10, 250, 20, 25))
         self.fail_label.setFont(font)
         self.fail_label.setObjectName("fail_label")
-        self.one_histogram_bar = HistogramBar(stats_dialog, 10)
-        self.two_histogram_bar = HistogramBar(stats_dialog, 50)
-        self.three_histogram_bar = HistogramBar(stats_dialog, 90)
-        self.four_histogram_bar = HistogramBar(stats_dialog, 130)
-        self.five_histogram_bar = HistogramBar(stats_dialog, 170)
-        self.six_histogram_bar = HistogramBar(stats_dialog, 210)
-        self.x_histogram_bar = HistogramBar(stats_dialog, 250)
+        self.one_histogram_bar = HistogramBar(stats_dialog, 10, font)
+        self.two_histogram_bar = HistogramBar(stats_dialog, 50, font)
+        self.three_histogram_bar = HistogramBar(stats_dialog, 90, font)
+        self.four_histogram_bar = HistogramBar(stats_dialog, 130, font)
+        self.five_histogram_bar = HistogramBar(stats_dialog, 170, font)
+        self.six_histogram_bar = HistogramBar(stats_dialog, 210, font)
+        self.x_histogram_bar = HistogramBar(stats_dialog, 250, font)
         self.histogram_bars: list[HistogramBar] = [self.one_histogram_bar, self.two_histogram_bar,
                                                    self.three_histogram_bar, self.four_histogram_bar,
                                                    self.five_histogram_bar, self.six_histogram_bar, self.x_histogram_bar

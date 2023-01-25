@@ -10,8 +10,7 @@ from triggers import implement_triggers
 def main():
     # Initialize windows/apps
     app = QtWidgets.QApplication(sys.argv)
-    stats = GameStats()
-    window = GameWindow(stats)
+    window = GameWindow()
 
     # Initialize settings
     settings_dialog = SettingsDialog(window)
@@ -19,7 +18,7 @@ def main():
     settings_dialog.change_settings()
 
     # Implement triggers for menu items
-    implement_triggers(window, settings_dialog, stats)
+    implement_triggers(window, settings_dialog)
 
     # Open window
     window.show()

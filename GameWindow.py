@@ -10,12 +10,12 @@ LOSE_SCORE: int = 7
 
 # Encapsulates a main window and the functions of its items
 class GameWindow(QtWidgets.QMainWindow, UiMainWindow):
-    def __init__(self, _stats: GameStats, *args, **kwargs):
+    def __init__(self, *args, **kwargs):
         super(GameWindow, self).__init__(*args, **kwargs)
         self.setup_ui(self)
         self.__game_type: str = ""
         self.word_checker = WordChecker()
-        self.stats = _stats
+        self.stats = GameStats()
         self.set_game_type("daily")
         self.hard_mode: bool = False
         self.light_mode: bool = True

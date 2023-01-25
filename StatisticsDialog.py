@@ -36,7 +36,7 @@ class StatisticsDialog(QtWidgets.QDialog, UiStatisticsDialog):
             max_value = max(values)
 
             for x in range(len(self.histogram_bars)):
-                # TODO: Add labels to histogram bars to show text
+                self.histogram_bars[x].setToolTip(str(values[x]))
                 if (values[x] / max_value) != 0:
                     self.histogram_bars[x].set_percentage(values[x] / max_value)
 
