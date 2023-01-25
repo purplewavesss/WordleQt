@@ -27,6 +27,7 @@ class GameWindow(QtWidgets.QMainWindow, UiMainWindow):
         self.first_time: bool = True
         self.played_today: bool = self.stats.played_today()
         self.enter_button.clicked.connect(self.enter_case)
+        self.failed_guesses: list[str] = []
 
     def get_game_type(self) -> str:
         return self.__game_type
@@ -129,6 +130,9 @@ class GameWindow(QtWidgets.QMainWindow, UiMainWindow):
             # Color row
             for x in range(len(self.current_row.char_boxes)):
                 self.current_row.char_boxes[x].set_status(word_dict[x + 1])
+                if self.current_row.char_boxes[x].get_status() == "incorrect" and not \
+                   self.current_row.char_boxes[x].get_text() in self.failed_guesses:
+                    self.failed_guesses.append(self.current_row.char_boxes[x].get_text())
 
             # Check if game was won
             self.won = True
