@@ -61,61 +61,72 @@ class GameWindow(QtWidgets.QMainWindow, UiMainWindow):
         # Switch on key entered
         match keyboard.key():
             case QtCore.Qt.Key.Key_A:
-                self.current_row.add_char("A")
+                self.add_char("A")
             case QtCore.Qt.Key.Key_B:
-                self.current_row.add_char("B")
+                self.add_char("B")
             case QtCore.Qt.Key.Key_C:
-                self.current_row.add_char("C")
+                self.add_char("C")
             case QtCore.Qt.Key.Key_D:
-                self.current_row.add_char("D")
+                self.add_char("D")
             case QtCore.Qt.Key.Key_E:
-                self.current_row.add_char("E")
+                self.add_char("E")
             case QtCore.Qt.Key.Key_F:
-                self.current_row.add_char("F")
+                self.add_char("F")
             case QtCore.Qt.Key.Key_G:
-                self.current_row.add_char("G")
+                self.add_char("G")
             case QtCore.Qt.Key.Key_H:
-                self.current_row.add_char("H")
+                self.add_char("H")
             case QtCore.Qt.Key.Key_I:
-                self.current_row.add_char("I")
+                self.add_char("I")
             case QtCore.Qt.Key.Key_J:
-                self.current_row.add_char("J")
+                self.add_char("J")
             case QtCore.Qt.Key.Key_K:
-                self.current_row.add_char("K")
+                self.add_char("K")
             case QtCore.Qt.Key.Key_L:
-                self.current_row.add_char("L")
+                self.add_char("L")
             case QtCore.Qt.Key.Key_M:
-                self.current_row.add_char("M")
+                self.add_char("M")
             case QtCore.Qt.Key.Key_N:
-                self.current_row.add_char("N")
+                self.add_char("N")
             case QtCore.Qt.Key.Key_O:
-                self.current_row.add_char("O")
+                self.add_char("O")
             case QtCore.Qt.Key.Key_P:
-                self.current_row.add_char("P")
+                self.add_char("P")
             case QtCore.Qt.Key.Key_Q:
-                self.current_row.add_char("Q")
+                self.add_char("Q")
             case QtCore.Qt.Key.Key_R:
-                self.current_row.add_char("R")
+                self.add_char("R")
             case QtCore.Qt.Key.Key_S:
-                self.current_row.add_char("S")
+                self.add_char("S")
             case QtCore.Qt.Key.Key_T:
-                self.current_row.add_char("T")
+                self.add_char("T")
             case QtCore.Qt.Key.Key_U:
-                self.current_row.add_char("U")
+                self.add_char("U")
             case QtCore.Qt.Key.Key_V:
-                self.current_row.add_char("V")
+                self.add_char("V")
             case QtCore.Qt.Key.Key_W:
-                self.current_row.add_char("W")
+                self.add_char("W")
             case QtCore.Qt.Key.Key_X:
-                self.current_row.add_char("X")
+                self.add_char("X")
             case QtCore.Qt.Key.Key_Y:
-                self.current_row.add_char("Y")
+                self.add_char("Y")
             case QtCore.Qt.Key.Key_Z:
-                self.current_row.add_char("Z")
+                self.add_char("Z")
             case QtCore.Qt.Key.Key_Backspace:
-                self.current_row.remove_char()
+                self.remove_char()
             case QtCore.Qt.Key.Key_Return:
                 self.enter_case()
+
+    def add_char(self, char: str):
+        self.current_row.add_char(char)
+        if char in self.failed_guesses:
+            self.current_row.char_boxes[len(self.current_row.get_word()) - 1].set_status("incorrect")
+
+    def remove_char(self):
+        old_char: str = self.current_row.char_boxes[len(self.current_row.get_word()) - 1].get_text()
+        self.current_row.remove_char()
+        if old_char in self.failed_guesses:
+            self.current_row.char_boxes[len(self.current_row.get_word())].set_status("blank")
 
     def enter_word(self):
         # Check if word is proper length, not past last word, and valid

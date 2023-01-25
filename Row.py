@@ -4,7 +4,7 @@ from CharBox import CharBox
 # Encapsulates a row made out of CharBoxes
 class Row:
     def __init__(self, _char_boxes: tuple[CharBox, CharBox, CharBox, CharBox, CharBox]):
-        self.char_boxes = _char_boxes
+        self.char_boxes: tuple[CharBox, CharBox, CharBox, CharBox, CharBox] = _char_boxes
         self.__char_list: list = []
         self.__word: str = ""
 
