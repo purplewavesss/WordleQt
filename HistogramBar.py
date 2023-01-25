@@ -23,6 +23,7 @@ class HistogramBar(QtWidgets.QLabel):
         painter.end()
 
     def draw_bar(self, painter: QtGui.QPainter):
-        painter.setBrush(QtGui.QColor(0, 255, 0))
-        painter.setPen(QtGui.QColor(0, 255, 0))
-        painter.drawRect(0, 0, int(350 * self.get_percentage()), self.height())
+        if self.get_percentage() > 0:
+            painter.setBrush(QtGui.QColor(0, 255, 0))
+            painter.setPen(QtGui.QColor(0, 255, 0))
+            painter.drawRect(0, 0, int(350 * self.get_percentage()), self.height())

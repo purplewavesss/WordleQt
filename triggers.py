@@ -43,7 +43,8 @@ def practice_action_triggers(game_window: GameWindow):
 
 def create_statistics_dialog(game_stats, data_type: str):
     statistics_dialog = StatisticsDialog(game_stats, data_type)
-    statistics_dialog.exec()
+    if statistics_dialog.histogram_generated:
+        statistics_dialog.exec()
 
 
 def add_words_action_triggers(game_window: GameWindow):

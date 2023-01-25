@@ -42,11 +42,15 @@ class GameWindow(QtWidgets.QMainWindow, UiMainWindow):
     def set_game_end(self, _game_end: bool, lose: bool):
         self.__game_end = _game_end
         if self.__game_end:
-            if not lose:
-                self.stats.add_score(len(self.guesses))
-            else:
-                self.stats.add_score(7)
-            self.add_to_streak()
+            if self.get_game_type() != "daily" or not self.played_today:
+                if not lose:
+                    self.stats.add_score(len(self.guesses))
+                else:
+                    self.stats.add_score(7)
+
+                if not self.played_today and self.get_game_type() == "daily":
+                    self.add_to_streak()
+
             self.enter_case()
 
     def keyPressEvent(self, a0: QtGui.QKeyEvent) -> None:
@@ -135,9 +139,7 @@ class GameWindow(QtWidgets.QMainWindow, UiMainWindow):
 
             # Loss scenario
             if self.row_index == 5 and not self.won:
-                self.gen_message_box("Loser", f'You lost! The word was {self.word_checker.word.upper()}.',
-                                     QtWidgets.QMessageBox.Icon.NoIcon)
-                self.set_game_end(True, True)
+                self.lose()
 
             else:
                 # If not last row, switch to next row
@@ -147,9 +149,7 @@ class GameWindow(QtWidgets.QMainWindow, UiMainWindow):
 
                 # If won, display win message
                 elif self.won:
-                    self.gen_message_box("Winner", f'You won after {len(self.guesses)} guesses!',
-                                         QtWidgets.QMessageBox.Icon.NoIcon)
-                    self.set_game_end(True, False)
+                    self.win()
 
         # Invalid word
         elif len(self.current_row.get_word()) == 5 and len(self.guesses) < 6 and not self.word_checker.valid_check(
@@ -182,6 +182,34 @@ class GameWindow(QtWidgets.QMainWindow, UiMainWindow):
         if not self.played_today:
             self.played_today = True
             self.stats.add_to_streak()
+
+    def lose(self):
+        # First play message
+        if not self.played_today or self.get_game_type() != "daily":
+            self.gen_message_box("Loser", f'You lost! The word was {self.word_checker.word.upper()}.',
+                                 QtWidgets.QMessageBox.Icon.NoIcon)
+            self.set_game_end(True, True)
+
+        # Post-first play message
+        elif self.played_today and self.get_game_type() == "daily":
+            self.gen_message_box("Loser", f'You lost! The word was {self.word_checker.word.upper()}. Thankfully'
+                                          f', this won\'t count, as you\'ve already played today.',
+                                 QtWidgets.QMessageBox.Icon.NoIcon)
+            self.set_game_end(True, True)
+
+    def win(self):
+        # First play message
+        if not self.played_today or self.get_game_type() != "daily":
+            self.gen_message_box("Winner", f'You won after {len(self.guesses)} guesses!',
+                                 QtWidgets.QMessageBox.Icon.NoIcon)
+            self.set_game_end(True, False)
+
+        # Post-first play message
+        elif self.played_today and self.get_game_type() == "daily":
+            self.gen_message_box("Winner", f'You won after {len(self.guesses)} guesses! You\'ve already '
+                                           f'played today, so this game won\'t count.',
+                                 QtWidgets.QMessageBox.Icon.NoIcon)
+            self.set_game_end(True, False)
 
     @staticmethod
     def gen_message_box(title: str, message: str, icon: QtWidgets.QMessageBox.Icon):
