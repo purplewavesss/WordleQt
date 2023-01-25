@@ -1,3 +1,5 @@
+from datetime import date, datetime
+
 POTENTIAL_CORRECT_GUESSES: int = 6
 
 
@@ -7,7 +9,10 @@ class GameStats:
         self.daily_stats_dict: dict[str, int] = self.gen_stats_dict("stats/daily_stats.txt")
         self.random_stats_dict: dict[str, int] = self.gen_stats_dict("stats/random_stats.txt")
         self.combined_stats_dict: dict[str, int] = {}
+        self.streak: int = 0
         self.gen_combined_dict()
+        self.check_streak()
+        print(self.streak)
 
     def add_score(self, guesses: int):
         with open("stats/" + self.game_type + "_stats.txt", 'a') as fs:
@@ -16,6 +21,31 @@ class GameStats:
         self.daily_stats_dict = self.gen_stats_dict("stats/daily_stats.txt")
         self.random_stats_dict = self.gen_stats_dict("stats/random_stats.txt")
         self.gen_combined_dict()
+
+    def check_streak(self):
+        with open("stats/dates.txt", "r") as fs:
+            dates: list[str] = fs.readlines()
+
+        if len(dates) > 0:
+            days = (date.today() - datetime.strptime(dates[-1], "%Y-%m-%d").date()).days
+
+            if days > 1:
+                self.streak = 0
+                self.reset_streak()
+            else:
+                self.streak = len(dates) - 1
+
+        else:
+            self.streak = 0
+
+    def add_to_streak(self):
+        with open("stats/dates.txt", "a") as fs:
+            fs.write("\n" + str(date.today()))
+        self.streak += 1
+
+    def gen_combined_dict(self):
+        for num_key in self.daily_stats_dict.keys():
+            self.combined_stats_dict[num_key] = self.daily_stats_dict[num_key] + self.random_stats_dict[num_key]
 
     @staticmethod
     def gen_stats_dict(file: str) -> dict[str, int]:
@@ -38,10 +68,6 @@ class GameStats:
 
         return stats_dict
 
-    def gen_combined_dict(self):
-        for num_key in self.daily_stats_dict.keys():
-            self.combined_stats_dict[num_key] = self.daily_stats_dict[num_key] + self.random_stats_dict[num_key]
-
     @staticmethod
     def average(stats_dict: dict[int, str]) -> float:
         guess_sum: int = 0
@@ -53,3 +79,24 @@ class GameStats:
                 guess_num += stats_dict[num_key]
 
         return guess_sum / guess_num
+
+    @staticmethod
+    def played_today() -> bool:
+        with open("stats/dates.txt", "r") as fs:
+            dates_str = fs.read().split("\n")
+
+        dates: list[date] = []
+
+        for day in dates_str:
+            if day != "":
+                dates.append(datetime.strptime(day, "%Y-%m-%d"))
+
+        if len(dates) > 0:
+            return dates[-1] == date.today()
+        else:
+            return False
+
+    @staticmethod
+    def reset_streak():
+        with open("stats/dates.txt", "w") as fs:
+            fs.write("")

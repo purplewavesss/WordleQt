@@ -1,6 +1,5 @@
 import sys
 from PyQt5 import QtWidgets
-from GameStats import GameStats
 from GameWindow import GameWindow
 from SettingsDialog import SettingsDialog
 from triggers import implement_triggers

@@ -25,6 +25,7 @@ class GameWindow(QtWidgets.QMainWindow, UiMainWindow):
         self.current_row: Row = self.row1
         self.row_index: int = 0
         self.first_time: bool = True
+        self.played_today: bool = self.stats.played_today()
         self.enter_button.clicked.connect(self.enter_case)
 
     def get_game_type(self) -> str:
@@ -45,6 +46,7 @@ class GameWindow(QtWidgets.QMainWindow, UiMainWindow):
                 self.stats.add_score(len(self.guesses))
             else:
                 self.stats.add_score(7)
+            self.add_to_streak()
             self.enter_case()
 
     def keyPressEvent(self, a0: QtGui.QKeyEvent) -> None:
@@ -175,6 +177,11 @@ class GameWindow(QtWidgets.QMainWindow, UiMainWindow):
         else:
             self.reset("random")
             self.set_game_end(False, False)
+
+    def add_to_streak(self):
+        if not self.played_today:
+            self.played_today = True
+            self.stats.add_to_streak()
 
     @staticmethod
     def gen_message_box(title: str, message: str, icon: QtWidgets.QMessageBox.Icon):
