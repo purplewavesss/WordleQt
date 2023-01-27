@@ -2,3 +2,7 @@
 /venv/
 /.mypy_cache/
 /.ropeproject/
+/dist/
+/build/
+/main.spec
+/main.exe
