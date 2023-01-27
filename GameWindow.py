@@ -1,6 +1,7 @@
 from PyQt5 import QtWidgets, QtGui, QtCore
 from Row import Row
 from GameStats import GameStats
+from ShareDialog import ShareDialog
 from UiGameWindow import UiMainWindow
 from WordChecker import WordChecker
 
@@ -35,8 +36,8 @@ class GameWindow(QtWidgets.QMainWindow, UiMainWindow):
 
     def set_game_type(self, _game_type: str, _word: str = ""):
         self.__game_type = _game_type
-        self.word_checker.set_game_type(self.__game_type, _word)
-        self.stats.game_type = self.__game_type
+        self.word_checker.set_game_type(self.get_game_type(), _word)
+        self.stats.game_type = self.get_game_type()
 
     def get_game_end(self) -> bool:
         return self.__game_end
@@ -71,8 +72,8 @@ class GameWindow(QtWidgets.QMainWindow, UiMainWindow):
             row.light_mode = self.get_light_mode()
         self.set_dark()
 
-    def keyPressEvent(self, a0: QtGui.QKeyEvent) -> None:
-        self.key_parse(a0)
+    def keyPressEvent(self, key_event: QtGui.QKeyEvent) -> None:
+        self.key_parse(key_event)
 
     def key_parse(self, keyboard: QtGui.QKeyEvent):
         # Switch on key entered
@@ -161,9 +162,18 @@ class GameWindow(QtWidgets.QMainWindow, UiMainWindow):
                 # Color row
                 for x in range(len(self.current_row.char_boxes)):
                     self.current_row.char_boxes[x].set_status(word_dict[x + 1])
+
+                    # Check for failed guesses
                     if self.current_row.char_boxes[x].get_status() == "incorrect" and not \
-                            self.current_row.char_boxes[x].get_text() in self.failed_guesses:
-                        self.failed_guesses.append(self.current_row.char_boxes[x].get_text())
+                       self.current_row.char_boxes[x].get_text() in self.failed_guesses:
+                        is_failed_guess: bool = True
+                        for row in self.rows:
+                            for char_box in row.char_boxes:
+                                if char_box.text() == self.current_row.char_boxes[x].get_text() and \
+                                   char_box.get_status() == "partial":
+                                    is_failed_guess = False
+                        if is_failed_guess:
+                            self.failed_guesses.append(self.current_row.char_boxes[x].get_text())
 
                 # Check if game was won
                 self.won = True
@@ -243,6 +253,7 @@ class GameWindow(QtWidgets.QMainWindow, UiMainWindow):
         if not self.played_today or self.get_game_type() != "daily":
             self.gen_message_box("Winner", f'You won after {len(self.guesses)} guesses!',
                                  QtWidgets.QMessageBox.Icon.NoIcon)
+            self.ask_to_share()
             self.set_game_end(True, False)
 
         # Post-first play message
@@ -259,6 +270,34 @@ class GameWindow(QtWidgets.QMainWindow, UiMainWindow):
                     char_box.set_status("blank")
                 else:
                     char_box.set_status("blank_dark")
+
+    def ask_to_share(self):
+        # Initialize share dialog
+        share_dialog = ShareDialog()
+        share_dialog.generate_share_text(self.rows, len(self.guesses), self.get_game_type())
+
+        # Create message box
+        share_message_box = QtWidgets.QMessageBox()
+        share_message_box.setWindowTitle("Share your results")
+        share_message_box.setIcon(QtWidgets.QMessageBox.Icon.Question)
+        share_message_box.setText("Do you want to share your results?")
+
+        # Create buttons
+        yes_button = QtWidgets.QPushButton()
+        yes_button.setText("Yes")
+        no_button = QtWidgets.QPushButton()
+        no_button.setText("No")
+
+        # Add triggers
+        yes_button.clicked.connect(share_dialog.exec)
+        no_button.clicked.connect(share_message_box.reject)
+
+        # Add buttons to message box
+        share_message_box.addButton(yes_button, QtWidgets.QMessageBox.ButtonRole.YesRole)
+        share_message_box.addButton(no_button, QtWidgets.QMessageBox.ButtonRole.NoRole)
+
+        # Execute
+        share_message_box.exec()
 
     @staticmethod
     def gen_message_box(title: str, message: str, icon: QtWidgets.QMessageBox.Icon):

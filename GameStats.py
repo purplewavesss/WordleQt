@@ -14,15 +14,16 @@ class GameStats:
         self.check_streak()
 
     def add_score(self, guesses: int):
-        # Writes score to stats file
-        with open("stats/" + self.game_type + "_stats.txt", 'a') as fs:
-            fs.write(str(guesses))
-            self.gen_stats_dict("stats/" + self.game_type + "_stats.txt")
+        if self.game_type != "manual":
+            # Writes score to stats file
+            with open("stats/" + self.game_type + "_stats.txt", 'a') as fs:
+                fs.write(str(guesses))
+                self.gen_stats_dict("stats/" + self.game_type + "_stats.txt")
 
-        # Updates dictionaries
-        self.daily_stats_dict = self.gen_stats_dict("stats/daily_stats.txt")
-        self.random_stats_dict = self.gen_stats_dict("stats/random_stats.txt")
-        self.gen_combined_dict()
+            # Updates dictionaries
+            self.daily_stats_dict = self.gen_stats_dict("stats/daily_stats.txt")
+            self.random_stats_dict = self.gen_stats_dict("stats/random_stats.txt")
+            self.gen_combined_dict()
 
     def check_streak(self):
         # Read and store dates.txt

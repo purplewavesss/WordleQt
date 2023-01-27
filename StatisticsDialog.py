@@ -1,5 +1,3 @@
-import math
-
 from PyQt5 import QtWidgets
 from GameStats import GameStats
 from GameWindow import GameWindow
@@ -15,7 +13,8 @@ class StatisticsDialog(QtWidgets.QDialog, UiStatisticsDialog):
         self.stats_dict: dict[str, int] = self.get_dict()
         self.setWindowTitle(self.data_type + " Statistics")
         self.histogram_generated: bool = self.gen_histogram()
-        self.get_average()
+        if self.histogram_generated:
+            self.get_average()
 
     def get_dict(self) -> dict[str, int]:
         match self.data_type:

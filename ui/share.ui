@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>share_dialog</class>
+ <widget class="QDialog" name="share_dialog">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>210</width>
+    <height>250</height>
+   </rect>
+  </property>
+  <property name="windowTitle">
+   <string>Share</string>
+  </property>
+  <widget class="QLabel" name="label">
+   <property name="geometry">
+    <rect>
+     <x>10</x>
+     <y>10</y>
+     <width>190</width>
+     <height>15</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>Copy and share the code below:</string>
+   </property>
+  </widget>
+  <widget class="QPlainTextEdit" name="share_text">
+   <property name="geometry">
+    <rect>
+     <x>18</x>
+     <y>35</y>
+     <width>175</width>
+     <height>165</height>
+    </rect>
+   </property>
+   <property name="plainText">
+    <string/>
+   </property>
+  </widget>
+  <widget class="QPushButton" name="pushButton">
+   <property name="geometry">
+    <rect>
+     <x>18</x>
+     <y>210</y>
+     <width>175</width>
+     <height>30</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>OK</string>
+   </property>
+  </widget>
+ </widget>
+ <resources/>
+ <connections/>
+</ui>
