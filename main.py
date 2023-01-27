@@ -15,7 +15,7 @@ def main():
         window = GameWindow()
 
         # Initialize settings
-        settings_dialog = SettingsDialog(window, app)
+        settings_dialog = SettingsDialog(window)
         settings_dialog.read_settings()
         settings_dialog.change_settings()
 
@@ -34,7 +34,6 @@ def main():
         current_exit_code = app.exec()
         window.close()
         app = None
-        settings_dialog = None
 
 
 if __name__ == '__main__':

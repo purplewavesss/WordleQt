@@ -5,11 +5,10 @@ from conversions import *
 
 
 class SettingsDialog(QtWidgets.QDialog, UiSettingsDialog):
-    def __init__(self, _game_window: GameWindow, _app: QtWidgets.QApplication):
+    def __init__(self, _game_window: GameWindow):
         super(SettingsDialog, self).__init__()
         self.setup_ui(self)
         self.game_window = _game_window
-        self.app = _app
         self.settings_dict: dict[str, bool] = {"Hard": False, "Light": True}
         self.read_settings()
         self.hard_mode_on_option.toggled.connect(lambda: self.register_settings_change(self.hard_mode_on_option))
