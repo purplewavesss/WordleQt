@@ -77,7 +77,7 @@ class GameStats:
         return stats_dict
 
     @staticmethod
-    def average(stats_dict: dict[int, str]) -> float:
+    def average(stats_dict: dict[str, int]) -> float:
         guess_sum: int = 0
         guess_num: int = 0
 
