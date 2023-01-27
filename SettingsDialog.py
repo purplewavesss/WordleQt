@@ -73,6 +73,7 @@ class SettingsDialog(QtWidgets.QDialog, UiSettingsDialog):
             self.game_window.stats.daily_stats_dict = {}
             self.game_window.stats.random_stats_dict = {}
             self.game_window.stats.gen_combined_dict()
+            self.game_window.played_today = False
             self.reset = False
 
     def change_settings(self):

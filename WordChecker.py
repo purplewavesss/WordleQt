@@ -1,7 +1,7 @@
 import random
 from datetime import date, timedelta
 
-ORIGINAL_DATE = date(2023, 1, 26)
+ORIGINAL_DATE = date(2023, 1, 27)
 
 
 class WordChecker:
