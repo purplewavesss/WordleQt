@@ -10,7 +10,6 @@ class CharBox(QtWidgets.QLabel):
         self.__text: str = " "
         self.set_text(self.__text)
         self.__status: str = ""
-        self.set_status("blank")
 
         # Initialize font
         font = QtGui.QFont()
@@ -51,5 +50,8 @@ class CharBox(QtWidgets.QLabel):
             # Corresponds with the blank color at the start of Wordle
             case "blank":
                 self.setStyleSheet("background-color: rgb(255, 255, 255);\ncolor: black;")
+            # Corresponds with the blank color at the start of Wordle in dark mode
+            case "blank_dark":
+                self.setStyleSheet("background-color: rgb(0, 0, 0);\ncolor: white;\nborder: 1px solid white;")
             case _:
                 raise ValueError("Incorrect status used!")

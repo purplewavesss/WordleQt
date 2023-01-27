@@ -1,6 +1,4 @@
 # Form implementation generated from reading ui file 'statistics.ui'
-
-
 from PyQt5 import QtCore, QtGui, QtWidgets
 from HistogramBar import HistogramBar
 

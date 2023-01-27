@@ -5,10 +5,11 @@ from conversions import *
 
 
 class SettingsDialog(QtWidgets.QDialog, UiSettingsDialog):
-    def __init__(self, _game_window: GameWindow):
+    def __init__(self, _game_window: GameWindow, _app: QtWidgets.QApplication):
         super(SettingsDialog, self).__init__()
         self.setup_ui(self)
         self.game_window = _game_window
+        self.app = _app
         self.settings_dict: dict[str, bool] = {"Hard": False, "Light": True}
         self.read_settings()
         self.hard_mode_on_option.toggled.connect(lambda: self.register_settings_change(self.hard_mode_on_option))
@@ -77,9 +78,13 @@ class SettingsDialog(QtWidgets.QDialog, UiSettingsDialog):
 
     def change_settings(self):
         was_hard_mode = self.game_window.get_hard_mode()
+        was_light_mode = self.game_window.get_light_mode()
 
         self.game_window.set_hard_mode(self.settings_dict["Hard"])
-        self.game_window.light_mode = self.settings_dict["Light"]
+        self.game_window.set_light_mode(self.settings_dict["Light"])
+
+        if self.game_window.get_light_mode() != was_light_mode:
+            self.light_mode_reset()
 
         if self.game_window.get_hard_mode() and not was_hard_mode and not self.game_window.first_time:
             self.game_window.reset("random")
@@ -98,3 +103,7 @@ class SettingsDialog(QtWidgets.QDialog, UiSettingsDialog):
     def yes_reset(self, msg_box: QtWidgets.QMessageBox, _reset: bool):
         self.reset = _reset
         msg_box.accept()
+
+    @staticmethod
+    def light_mode_reset():
+        QtWidgets.qApp.exit(GameWindow.EXIT_CODE_REBOOT)

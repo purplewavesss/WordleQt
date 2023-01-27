@@ -3,10 +3,11 @@ from CharBox import CharBox
 
 # Encapsulates a row made out of CharBoxes
 class Row:
-    def __init__(self, _char_boxes: tuple[CharBox, CharBox, CharBox, CharBox, CharBox]):
+    def __init__(self, _char_boxes: tuple[CharBox, CharBox, CharBox, CharBox, CharBox], _light_mode: bool):
         self.char_boxes: tuple[CharBox, CharBox, CharBox, CharBox, CharBox] = _char_boxes
         self.__char_list: list = []
         self.__word: str = ""
+        self.light_mode = _light_mode
 
     def add_char(self, char: str):
         if len(char) == 1 and len(self.__char_list) <= 4:
@@ -39,7 +40,10 @@ class Row:
     def clear_row(self):
         for char_box in self.char_boxes:
             char_box.set_text(" ")
-            char_box.set_status("blank")
+            if self.light_mode:
+                char_box.set_status("blank")
+            else:
+                char_box.set_status("blank_dark")
 
         # Clear all text
         self.__word = ""

@@ -1,8 +1,4 @@
-# -*- coding: utf-8 -*-
-
 # Form implementation generated from reading ui file 'C:/Users/School Account/Projects/WordleQt/addword.ui'
-
-
 from PyQt5 import QtCore, QtGui, QtWidgets
 
 

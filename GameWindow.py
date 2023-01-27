@@ -9,6 +9,8 @@ LOSE_SCORE: int = 7
 
 # Encapsulates a main window and the functions of its items
 class GameWindow(QtWidgets.QMainWindow, UiMainWindow):
+    EXIT_CODE_REBOOT = -123456
+
     def __init__(self, *args, **kwargs):
         super(GameWindow, self).__init__(*args, **kwargs)
         self.setup_ui(self)
@@ -17,7 +19,7 @@ class GameWindow(QtWidgets.QMainWindow, UiMainWindow):
         self.stats = GameStats()
         self.set_game_type("daily")
         self.__hard_mode: bool = False
-        self.light_mode: bool = True
+        self.__light_mode: bool = True
         self.guesses: list[str] = []
         self.won: bool = False
         self.__game_end: bool = False
@@ -56,9 +58,18 @@ class GameWindow(QtWidgets.QMainWindow, UiMainWindow):
     def get_hard_mode(self) -> bool:
         return self.__hard_mode
 
-    def set_hard_mode(self, _hard_mode):
+    def set_hard_mode(self, _hard_mode: bool):
         self.__hard_mode = _hard_mode
         self.stats.hard_mode = _hard_mode
+
+    def get_light_mode(self) -> bool:
+        return self.__light_mode
+
+    def set_light_mode(self, _light_mode: bool):
+        self.__light_mode = _light_mode
+        for row in self.rows:
+            row.light_mode = self.get_light_mode()
+        self.set_dark()
 
     def keyPressEvent(self, a0: QtGui.QKeyEvent) -> None:
         self.key_parse(a0)
@@ -239,6 +250,14 @@ class GameWindow(QtWidgets.QMainWindow, UiMainWindow):
                                            f'played today, so this game won\'t count.',
                                  QtWidgets.QMessageBox.Icon.NoIcon)
             self.set_game_end(True, False)
+
+    def set_dark(self):
+        for row in self.rows:
+            for char_box in row.char_boxes:
+                if self.get_light_mode():
+                    char_box.set_status("blank")
+                else:
+                    char_box.set_status("blank_dark")
 
     @staticmethod
     def gen_message_box(title: str, message: str, icon: QtWidgets.QMessageBox.Icon):

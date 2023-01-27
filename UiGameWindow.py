@@ -103,17 +103,17 @@ class UiMainWindow(object):
         self.menu_bar.addAction(self.about_menu.menuAction())
         # Initialize rows
         self.row1: Row = Row((self.char_box_a1, self.char_box_a2, self.char_box_a3, self.char_box_a4,
-                              self.char_box_a5))
+                              self.char_box_a5), False)
         self.row2: Row = Row((self.char_box_b1, self.char_box_b2, self.char_box_b3, self.char_box_b4,
-                              self.char_box_b5))
+                              self.char_box_b5), False)
         self.row3: Row = Row((self.char_box_c1, self.char_box_c2, self.char_box_c3, self.char_box_c4,
-                              self.char_box_c5))
+                              self.char_box_c5), False)
         self.row4: Row = Row((self.char_box_d1, self.char_box_d2, self.char_box_d3, self.char_box_d4,
-                              self.char_box_d5))
+                              self.char_box_d5), False)
         self.row5: Row = Row((self.char_box_e1, self.char_box_e2, self.char_box_e3, self.char_box_e4,
-                              self.char_box_e5))
+                              self.char_box_e5), False)
         self.row6: Row = Row((self.char_box_f1, self.char_box_f2, self.char_box_f3, self.char_box_f4,
-                              self.char_box_f5))
+                              self.char_box_f5), False)
         self.rows: tuple[Row, Row, Row, Row, Row, Row] = (self.row1, self.row2, self.row3, self.row4, self.row5,
                                                           self.row6)
 
