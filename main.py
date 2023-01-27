@@ -34,6 +34,7 @@ def main():
         current_exit_code = app.exec()
         window.close()
         app = None
+        settings_dialog = None
 
 
 if __name__ == '__main__':
