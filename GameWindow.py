@@ -210,6 +210,7 @@ class GameWindow(QtWidgets.QMainWindow, UiMainWindow):
         self.won = False
         self.current_row = self.row1
         self.row_index = 0
+        self.failed_guesses = []
 
     def enter_case(self):
         if not self.get_game_end():
