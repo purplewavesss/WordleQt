@@ -1,13 +1,14 @@
 import random
 from datetime import date, timedelta
 
-ORIGINAL_DATE = date(2023, 1, 25)
+ORIGINAL_DATE = date(2023, 1, 26)
 
 
 class WordChecker:
     def __init__(self):
         self.word = ""
         self.__game_type = ""
+        self.hard_mode = False
 
         # Open and store potential-answers.txt
         with open("words/potential-answers.txt", "r") as word_file:
@@ -75,6 +76,32 @@ class WordChecker:
                     else:
                         check_word_dict.update({x + 1: "incorrect"})
         return check_word_dict
+
+    def hard_valid_check(self, previous_guess: str, guess: str, failed_guesses: list[str]) -> bool:
+        if self.valid_check(guess):
+            previous_dict = self.check_word(previous_guess)
+            current_dict = self.check_word(guess)
+
+            # Checks if partials have been moved, corrects have been kept, and failed guesses removed
+            for char in previous_dict.keys():
+                if previous_dict[char] == "partial":
+                    if previous_dict[char] == current_dict[char] and previous_dict[char] == "partial":
+                        if previous_guess[char - 1] == guess[char - 1]:
+                            return False
+
+                    if not previous_guess[char - 1] in guess:
+                        return False
+
+                if previous_dict[char] != current_dict[char] and previous_dict[char] == "correct":
+                    return False
+
+                if guess[char - 1] in failed_guesses:
+                    return False
+
+            return True
+
+        else:
+            return False
 
     def valid_check(self, guess) -> bool:
         if guess.lower() in self.word_list:

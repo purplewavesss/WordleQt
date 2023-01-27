@@ -4,7 +4,6 @@ from GameStats import GameStats
 from UiGameWindow import UiMainWindow
 from WordChecker import WordChecker
 
-
 LOSE_SCORE: int = 7
 
 
@@ -17,7 +16,7 @@ class GameWindow(QtWidgets.QMainWindow, UiMainWindow):
         self.word_checker = WordChecker()
         self.stats = GameStats()
         self.set_game_type("daily")
-        self.hard_mode: bool = False
+        self.__hard_mode: bool = False
         self.light_mode: bool = True
         self.guesses: list[str] = []
         self.won: bool = False
@@ -53,6 +52,13 @@ class GameWindow(QtWidgets.QMainWindow, UiMainWindow):
                     self.add_to_streak()
 
             self.enter_case()
+
+    def get_hard_mode(self) -> bool:
+        return self.__hard_mode
+
+    def set_hard_mode(self, _hard_mode):
+        self.__hard_mode = _hard_mode
+        self.stats.hard_mode = _hard_mode
 
     def keyPressEvent(self, a0: QtGui.QKeyEvent) -> None:
         self.key_parse(a0)
@@ -132,39 +138,47 @@ class GameWindow(QtWidgets.QMainWindow, UiMainWindow):
         # Check if word is proper length, not past last word, and valid
         if len(self.current_row.get_word()) == 5 and len(self.guesses) < 6 and self.word_checker.valid_check(
                 self.current_row.get_word()):
-            self.guesses.append(self.current_row.get_word())
-            self.first_time = False
+            if not self.get_hard_mode() or self.first_time or self.word_checker.hard_valid_check(
+                                                              self.guesses[len(self.guesses) - 2],
+                                                              self.current_row.get_word(), self.failed_guesses):
+                self.guesses.append(self.current_row.get_word())
+                self.first_time = False
 
-            # Generate dictionary for CharBox color statuses
-            word_dict = self.word_checker.check_word(self.current_row.get_word())
+                # Generate dictionary for CharBox color statuses
+                word_dict = self.word_checker.check_word(self.current_row.get_word())
 
-            # Color row
-            for x in range(len(self.current_row.char_boxes)):
-                self.current_row.char_boxes[x].set_status(word_dict[x + 1])
-                if self.current_row.char_boxes[x].get_status() == "incorrect" and not \
-                   self.current_row.char_boxes[x].get_text() in self.failed_guesses:
-                    self.failed_guesses.append(self.current_row.char_boxes[x].get_text())
+                # Color row
+                for x in range(len(self.current_row.char_boxes)):
+                    self.current_row.char_boxes[x].set_status(word_dict[x + 1])
+                    if self.current_row.char_boxes[x].get_status() == "incorrect" and not \
+                            self.current_row.char_boxes[x].get_text() in self.failed_guesses:
+                        self.failed_guesses.append(self.current_row.char_boxes[x].get_text())
 
-            # Check if game was won
-            self.won = True
-            for letter in word_dict.keys():
-                if word_dict[letter] != "correct":
-                    self.won = False
-                    break
+                # Check if game was won
+                self.won = True
+                for letter in word_dict.keys():
+                    if word_dict[letter] != "correct":
+                        self.won = False
+                        break
 
-            # Loss scenario
-            if self.row_index == 5 and not self.won:
-                self.lose()
+                # Loss scenario
+                if self.row_index == 5 and not self.won:
+                    self.lose()
 
-            else:
-                # If not last row, switch to next row
-                if self.row_index < 5 and not self.won:
-                    self.row_index += 1
-                    self.current_row = self.rows[self.row_index]
+                else:
+                    # If not last row, switch to next row
+                    if self.row_index < 5 and not self.won:
+                        self.row_index += 1
+                        self.current_row = self.rows[self.row_index]
 
-                # If won, display win message
-                elif self.won:
-                    self.win()
+                    # If won, display win message
+                    elif self.won:
+                        self.win()
+
+            elif not self.word_checker.hard_valid_check(self.guesses[len(self.guesses) - 2],
+                                                        self.current_row.get_word(), self.failed_guesses):
+                self.gen_message_box("Invalid guess!", f'Your guess "{self.current_row.get_word()}" did not meet the '
+                                                       f'rules for hard mode.', QtWidgets.QMessageBox.Icon.Warning)
 
         # Invalid word
         elif len(self.current_row.get_word()) == 5 and len(self.guesses) < 6 and not self.word_checker.valid_check(

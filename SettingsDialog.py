@@ -76,12 +76,12 @@ class SettingsDialog(QtWidgets.QDialog, UiSettingsDialog):
             self.reset = False
 
     def change_settings(self):
-        was_hard_mode = self.game_window.hard_mode
+        was_hard_mode = self.game_window.get_hard_mode()
 
-        self.game_window.hard_mode = self.settings_dict["Hard"]
+        self.game_window.set_hard_mode(self.settings_dict["Hard"])
         self.game_window.light_mode = self.settings_dict["Light"]
 
-        if self.game_window.hard_mode and not was_hard_mode and not self.game_window.first_time:
+        if self.game_window.get_hard_mode() and not was_hard_mode and not self.game_window.first_time:
             self.game_window.reset("random")
 
         self.write_settings()
