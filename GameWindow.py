@@ -144,7 +144,10 @@ class GameWindow(QtWidgets.QMainWindow, UiMainWindow):
         old_char: str = self.current_row.char_boxes[len(self.current_row.get_word()) - 1].get_text()
         self.current_row.remove_char()
         if old_char in self.failed_guesses:
-            self.current_row.char_boxes[len(self.current_row.get_word())].set_status("blank")
+            if self.get_light_mode():
+                self.current_row.char_boxes[len(self.current_row.get_word())].set_status("blank")
+            else:
+                self.current_row.char_boxes[len(self.current_row.get_word())].set_status("blank_dark")
 
     def enter_word(self):
         # Check if word is proper length, not past last word, and valid
