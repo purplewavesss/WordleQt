@@ -14,12 +14,11 @@ def implement_triggers(game_window: GameWindow, settings_dialog: SettingsDialog)
     game_window.daily_game_action.triggered.connect(lambda: daily_action_triggers(game_window))
     game_window.practice_game_action.triggered.connect(lambda: practice_action_triggers(game_window))
     game_window.check_streak_action.triggered.connect(lambda: check_streak_triggers(game_window.stats))
-    game_window.check_daily_stats_action.triggered.connect(lambda: create_statistics_dialog(game_window.stats,
-                                                                                            game_window, "Daily"))
+    game_window.check_daily_stats_action.triggered.connect(lambda: create_statistics_dialog(game_window.stats, "Daily"))
     game_window.check_practice_stats_action.triggered.connect(lambda: create_statistics_dialog(game_window.stats,
-                                                                                               game_window, "Practice"))
+                                                                                               "Practice"))
     game_window.check_combined_stats_action.triggered.connect(lambda: create_statistics_dialog(game_window.stats,
-                                                                                               game_window, "Combined"))
+                                                                                               "Combined"))
     game_window.add_words_action.triggered.connect(lambda: add_words_action_triggers(game_window))
     game_window.settings_action.triggered.connect(settings_dialog.exec)
 
