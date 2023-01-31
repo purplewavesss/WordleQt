@@ -4,7 +4,7 @@ from HistogramBar import HistogramBar
 
 
 class UiStatisticsDialog(object):
-    def setup_ui(self, stats_dialog, light_mode):
+    def setup_ui(self, stats_dialog):
         stats_dialog.setObjectName("stats_dialog")
         stats_dialog.resize(410, 370)
 
