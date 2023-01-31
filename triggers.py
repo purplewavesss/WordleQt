@@ -46,7 +46,7 @@ def practice_action_triggers(game_window: GameWindow):
     game_window.practice_game_action.setChecked(True)
 
 
-def create_statistics_dialog(game_stats: GameStats, game_window: GameWindow, data_type: str):
+def create_statistics_dialog(game_stats: GameStats, data_type: str):
     statistics_dialog = StatisticsDialog(game_stats, data_type)
     if statistics_dialog.histogram_generated:
         statistics_dialog.exec()
