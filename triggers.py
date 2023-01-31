@@ -14,11 +14,12 @@ def implement_triggers(game_window: GameWindow, settings_dialog: SettingsDialog)
     game_window.daily_game_action.triggered.connect(lambda: daily_action_triggers(game_window))
     game_window.practice_game_action.triggered.connect(lambda: practice_action_triggers(game_window))
     game_window.check_streak_action.triggered.connect(lambda: check_streak_triggers(game_window.stats))
-    game_window.check_daily_stats_action.triggered.connect(lambda: create_statistics_dialog(game_window.stats, "Daily"))
+    game_window.check_daily_stats_action.triggered.connect(lambda: create_statistics_dialog(game_window.stats,
+                                                                                            game_window, "Daily"))
     game_window.check_practice_stats_action.triggered.connect(lambda: create_statistics_dialog(game_window.stats,
-                                                                                               "Practice"))
+                                                                                               game_window, "Practice"))
     game_window.check_combined_stats_action.triggered.connect(lambda: create_statistics_dialog(game_window.stats,
-                                                                                               "Combined"))
+                                                                                               game_window, "Combined"))
     game_window.add_words_action.triggered.connect(lambda: add_words_action_triggers(game_window))
     game_window.settings_action.triggered.connect(settings_dialog.exec)
 
@@ -35,14 +36,18 @@ def credit_action_triggers():
 
 def daily_action_triggers(game_window: GameWindow):
     game_window.reset("daily")
+    game_window.daily_game_action.setChecked(True)
+    game_window.practice_game_action.setChecked(False)
 
 
 def practice_action_triggers(game_window: GameWindow):
     game_window.reset("random")
+    game_window.daily_game_action.setChecked(False)
+    game_window.practice_game_action.setChecked(True)
 
 
-def create_statistics_dialog(game_stats, data_type: str):
-    statistics_dialog = StatisticsDialog(game_stats, data_type)
+def create_statistics_dialog(game_stats: GameStats, game_window: GameWindow, data_type: str):
+    statistics_dialog = StatisticsDialog(game_stats, data_type, game_window.get_light_mode())
     if statistics_dialog.histogram_generated:
         statistics_dialog.exec()
 

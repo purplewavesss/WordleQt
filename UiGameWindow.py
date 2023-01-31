@@ -118,6 +118,9 @@ class UiMainWindow(object):
                                                           self.row6)
 
         self.retranslate_ui(main_window)
+        self.daily_game_action.setCheckable(True)
+        self.practice_game_action.setCheckable(True)
+        self.daily_game_action.setChecked(True)
         QtCore.QMetaObject.connectSlotsByName(main_window)
 
     def retranslate_ui(self, main_window):

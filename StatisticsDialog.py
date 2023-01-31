@@ -5,9 +5,9 @@ from UiStatisticsDialog import UiStatisticsDialog
 
 
 class StatisticsDialog(QtWidgets.QDialog, UiStatisticsDialog):
-    def __init__(self, _game_stats: GameStats, _data_type: str):
+    def __init__(self, _game_stats: GameStats, _data_type: str, light_mode: bool):
         super(StatisticsDialog, self).__init__()
-        self.setup_ui(self)
+        self.setup_ui(self, light_mode)
         self.game_stats = _game_stats
         self.data_type: str = _data_type
         self.stats_dict: dict[str, int] = self.get_dict()
